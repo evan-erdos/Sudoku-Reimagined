@@ -29,6 +29,8 @@ public interface ISudokuBoard<T> {
 	 **/
 	IList<IList<ISpace<T>>> Board {get;}
 
+	Queue<T> PlaySequence {get;set;}
+
 	bool IsValid(IList<ISpace<T>> list);
 
 	bool IsRowValid(int n);
@@ -41,4 +43,6 @@ public interface ISudokuBoard<T> {
 	int Score ();
 
 	bool IsMoveValid(Move<T> move);
+
+	ISpace<T> GetNext();
 }

@@ -16,9 +16,10 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<IList<ISpace
         get { return total; }
     } protected T total;
 
-	public T[] PlaySequence {
+	public Queue<T> PlaySequence {
 		get { return playSequence; }
-	} protected T[] playSequence;
+        set { playSequence = value; }
+	} protected Queue<T> playSequence = new Queue<T>();
 
 	public int MovesCompleted {
 		get { return movesCompleted; }
@@ -67,7 +68,9 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<IList<ISpace
 
 	public SudokuBoard(int size, T[] playSequence) {
 		this.size = (uint) size;
-		this.playSequence = playSequence;
+        foreach (var n in playSequence)
+            this.playSequence.Enqueue(n);
+		//this.playSequence = playSequence;
 		// TODO I think maybe we don't need to initialize things to 0
 		this.movesCompleted = 0;
 		board = new List<IList<ISpace<T>>>(Size);
@@ -126,6 +129,10 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<IList<ISpace
 
     public IEnumerator<IList<ISpace<T>>> GetEnumerator() {
         return ((IEnumerator<IList<ISpace<T>>>) board.GetEnumerator());
+    }
+
+    public ISpace<T> GetNext() {
+        return new Space<T>(PlaySequence.Dequeue());
     }
 
     public abstract bool IsValid(IList<ISpace<T>> list);

@@ -9,7 +9,9 @@ public class IntSpaceWrapper : MonoBehaviour, ISpace<int> {
 
 	ISpace<int> space = new Space<int>(0);
 
-	bool isRevealed;
+	bool wait, isRevealed;
+
+	public ISudokuBoard<int> board;
 
 	TextMesh textMesh;
 
@@ -37,18 +39,22 @@ public class IntSpaceWrapper : MonoBehaviour, ISpace<int> {
     }
 
 
-    public void Reveal() {
+    public IEnumerator Reveal() {
+    	if (wait) yield break;
+    	wait = true;
     	isRevealed = true;
-    	SetSpace(space.Value);
+    	SetSpace(board.GetNext().Value);
+    	yield return new WaitForSeconds(0.5f);
+    	wait = false;
     }
 
 
     public IEnumerator OnMouseOver() {
         if (isRevealed) yield break;
         while (!isRevealed) {
-        	if (Input.GetButtonDown("Fire1")) {
-        		Reveal(); yield break;
-        	} else yield return new WaitForEndOfFrame();
+        	if (Input.GetButtonDown("Fire1"))
+        		yield return StartCoroutine(Reveal());
+        	else yield return new WaitForEndOfFrame();
         }
     }
 

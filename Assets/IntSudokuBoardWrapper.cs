@@ -15,9 +15,8 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 
 	public GameObject prefab;
 
-
-
 	void Awake() {
+#if SOLVED_BOARD
         int[][] array = new int[][] {
         	new int[] {3,7,8,4,9,6,5,2,1},
 			new int[] {1,5,9,2,3,7,6,4,8},
@@ -28,12 +27,13 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 			new int[] {4,8,1,3,2,5,9,7,6},
 			new int[] {5,3,7,6,8,9,4,1,2},
 			new int[] {6,9,2,7,4,1,8,3,5}};
+#endif
 
-		int[] numPlaySequence = {1, 2, 3, 4,
+		var numPlaySequence = new int[] {
+			1, 2, 3, 4,
 			4, 3, 2, 1,
 			1, 2, 3, 4,
-			4, 3, 2, 1
-		};
+			4, 3, 2, 1};
 		if (prefab==null)
 			throw new System.Exception("missing space prefab");
 		//board = new IntSudokuBoard(9, array);
@@ -54,13 +54,14 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 					Quaternion.identity) as GameObject);
 				instance.transform.parent = this.transform;
 				instance.GetComponent<IntSpaceWrapper>().Value = space.Value;
+				instance.GetComponent<IntSpaceWrapper>().board = this.board;
 				spaces.Add(instance);
 			}
 		}
 	}
 
 
-	public static IList<int> GetRemainingTiles(int size, int[][] array){
+	public static IList<int> GetRemainingTiles(int size, int[][] array) {
         var list = new List<int>();
         var dict = new Dictionary<int, int>();
         for (var i=0; i<=size; ++i) dict[i] = 9;
