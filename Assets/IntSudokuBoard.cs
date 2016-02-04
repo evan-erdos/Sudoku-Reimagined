@@ -16,6 +16,9 @@ public class IntSudokuBoard : SudokuBoard<int> {
     public IntSudokuBoard(int size, IList<IList<ISpace<int>>> board)
     	: base(size,board) { }
 
+    public IntSudokuBoard(int size, int[][] board)
+    	: base(size,board) { }
+
     public override bool IsRowValid(int n) {
 		return IsValid(GetRow(n));
     }

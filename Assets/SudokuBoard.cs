@@ -46,6 +46,17 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<IList<ISpace
         this.board = board;
     }
 
+    public SudokuBoard(int size, T[][] array) {
+        this.size = (uint) size;
+        this.board = new List<IList<ISpace<T>>>(Size);
+        for (var i=0; i<Size; ++i) {
+            var list = new List<ISpace<T>>(Size);
+            this.board.Add(list);
+            for (var j=0; j<Size; ++j)
+                list.Add(new Space<T>(array[j][i]));
+        }
+    }
+
 
     public bool IsValidSpace(int x, int y) {
         return ((0>=x && x<Size) && (0>=y && y<Size) && !board[y][x].IsEmpty); }
