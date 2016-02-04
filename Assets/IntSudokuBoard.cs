@@ -19,6 +19,9 @@ public class IntSudokuBoard : SudokuBoard<int> {
     public IntSudokuBoard(int size, int[][] array)
     	: base(size,array) { }
 
+	public IntSudokuBoard(int size, int[] playSequence)
+		: base(size, playSequence) { }
+
     public override bool IsRowValid(int n) {
 		return IsValid(GetRow(n));
     }
@@ -64,7 +67,7 @@ public class IntSudokuBoard : SudokuBoard<int> {
 	}
 
     public override bool IsMoveValid(Move<int> move) {
-		return board[move.x][move.y].IsEmpty;
+		return board [move.x] [move.y].IsEmpty;
     }
 }
 

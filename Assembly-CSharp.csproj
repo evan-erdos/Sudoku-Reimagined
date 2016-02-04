@@ -45,13 +45,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\BeginGame.cs" />
+     <Compile Include="Assets\CameraFade.cs" />
      <Compile Include="Assets\ISpace.cs" />
      <Compile Include="Assets\ISudokuBoard.cs" />
-     <Compile Include="Assets\IntSpace.cs" />
+     <Compile Include="Assets\IntSpaceWrapper.cs" />
      <Compile Include="Assets\IntSudokuBoard.cs" />
+     <Compile Include="Assets\IntSudokuBoardWrapper.cs" />
+     <Compile Include="Assets\IntTileSet.cs" />
      <Compile Include="Assets\Move.cs" />
      <Compile Include="Assets\Space.cs" />
      <Compile Include="Assets\SudokuBoard.cs" />
+     <Compile Include="Assets\TileSet.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
