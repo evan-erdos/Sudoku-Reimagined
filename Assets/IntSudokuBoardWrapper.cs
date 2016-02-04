@@ -1,7 +1,6 @@
 /* Ben Scott * bescott@andrew.cmu.edu * 2016-02-03 * SudokuBoard */
 
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -17,7 +16,7 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 	public GameObject prefab;
 
 	void Awake() {
-		int[][] array = new int[][] {
+		int[][] oldarray = new int[][] {
             new int[] {0,0,0,0,4,0,0,9,0},
             new int[] {5,2,9,3,0,0,7,4,1},
             new int[] {0,7,0,0,0,5,6,2,8},
@@ -27,6 +26,16 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
             new int[] {4,0,0,8,0,0,0,0,0},
             new int[] {0,3,0,0,0,0,0,6,0},
             new int[] {0,0,0,0,9,3,5,7,0}};
+        int[][] array = new int[][] {
+        	new int[] {3,7,8,4,9,6,5,2,1},
+			new int[] {1,5,9,2,3,7,6,4,8},
+			new int[] {2,6,4,5,1,8,7,9,3},
+			new int[] {7,4,5,1,6,2,3,8,9},
+			new int[] {8,1,3,9,5,4,2,6,7},
+			new int[] {9,2,6,8,7,3,1,5,4},
+			new int[] {4,8,1,3,2,5,9,7,6},
+			new int[] {5,3,7,6,8,9,4,1,2},
+			new int[] {6,9,2,7,4,1,8,3,5}};
 		if (prefab==null)
 			throw new System.Exception("missing space prefab");
 		board = new IntSudokuBoard(9, array);
