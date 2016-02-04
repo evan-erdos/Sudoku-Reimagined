@@ -9,24 +9,23 @@ using System.Collections.Generic;
 public class IntSudokuBoard : SudokuBoard<int> {
 
     public override bool IsRowValid(int n) {
-		return IsValid (GetRow (n));
+		return IsValid(GetRow(n));
     }
 
     public override bool IsColValid(int n) {
-		return IsValid (GetCol (n));
+		return IsValid(GetCol(n));
     }
 
     public override bool IsBlockValid(int n) {
-		return IsValid (GetBlock (n));
+		return IsValid(GetBlock(n));
     }
 
     public override bool IsValid(IList<ISpace<int>> list) {
-		if (list.Count != Size)
-			return false;
+		if (list.Count != Size) return false;
 
 		/* Convert to a list of ints to make it easier to valid */
-		List<int> intList = new List<int>{};
-		foreach (Space<int> space in list)
+		var intList = new List<int>();
+		foreach (var space in list)
 			intList.Add(space.Value);
 
 		intList.Sort();
@@ -34,11 +33,11 @@ public class IntSudokuBoard : SudokuBoard<int> {
 			if (intList [i] != i + 1)
 				return false;
 		}
-			
+
         return true;
     }
 
-	public override int Score () {
+	public override int Score() {
 		int totalScore = 0;
 
 		for (int i = 0; i < Size; i++) {
@@ -54,7 +53,7 @@ public class IntSudokuBoard : SudokuBoard<int> {
 	}
 
     public override bool IsMoveValid(Move<int> move) {
-		return board [move.x] [move.y].IsEmpty;
+		return board[move.x][move.y].IsEmpty;
     }
 }
 

@@ -11,7 +11,7 @@ public abstract class SudokuBoard<T> : MonoBehaviour, ISudokuBoard<T> {
     public int Size {
 		get { return (int) size; }
    	} protected uint size;
-		
+
    	public T Total {
    		get { return total; }
    	} protected T total;
@@ -65,9 +65,9 @@ public abstract class SudokuBoard<T> : MonoBehaviour, ISudokuBoard<T> {
 		for (int i = 0; i < Size/2; i++)
 			for (int j = 0; i < Size/2; j++)
 				list.Add(board[i + rowShift][j + colShift]);
-		
+
 		return list;
-	
+
 	}
 
    	public abstract bool IsValid(IList<ISpace<T>> list);
@@ -78,7 +78,7 @@ public abstract class SudokuBoard<T> : MonoBehaviour, ISudokuBoard<T> {
 
 	public abstract bool IsBlockValid(int n);
 
-	public abstract int Score ();
+	public abstract int Score();
 
 	public abstract bool IsMoveValid(Move<T> move);
 }
