@@ -16,6 +16,14 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<IList<ISpace
         get { return total; }
     } protected T total;
 
+	public T[] PlaySequence {
+		get { return playSequence; }
+	} protected T[] playSequence;
+
+	public int MovesCompleted {
+		get { return movesCompleted; }
+	} protected int movesCompleted;
+
     public IList<IList<ISpace<T>>> Board {
         get { return board; }
     } protected IList<IList<ISpace<T>>> board;
@@ -56,6 +64,20 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<IList<ISpace
                 list.Add(new Space<T>(array[j][i]));
         }
     }
+
+	public SudokuBoard(int size, T[] playSequence) {
+		this.size = (uint) size;
+		this.playSequence = playSequence;
+		// TODO I think maybe we don't need to initialize things to 0
+		this.movesCompleted = 0;
+		board = new List<IList<ISpace<T>>>(Size);
+		for (var i=0; i<Size; ++i) {
+			var list = new List<ISpace<T>>(Size);
+			board.Add(list);
+			for (var j=0; j<Size; ++j)
+				list.Add(new Space<T>());
+		}
+	}
 
     public bool IsValidSpace(int x, int y) {
         return ((0>=x && x<Size) && (0>=y && y<Size) && !board[y][x].IsEmpty); }
