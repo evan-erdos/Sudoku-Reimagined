@@ -5,14 +5,13 @@ using System.Collections.Generic;
 
 public class IntSpaceWrapper : MonoBehaviour, ISpace<int> {
 
-	public ISpace<int> space = new Space<int>(0);
+	ISpace<int> space = new Space<int>(0);
 
 	TextMesh textMesh;
 
     public int Value {
     	get { return space.Value; }
-    	set { if (space.Value==value) return;
-    		space.Value = value;
+    	set { space.Value = value;
     		SetSpace(space.Value);
     	}
     }
@@ -23,7 +22,6 @@ public class IntSpaceWrapper : MonoBehaviour, ISpace<int> {
     	textMesh = GetComponentInChildren<TextMesh>();
     	if (textMesh==null)
     		throw new System.Exception("No render text");
-    	SetSpace(space.Value);
     }
 
     public void SetSpace(int n) {

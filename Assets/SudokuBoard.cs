@@ -57,7 +57,6 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<IList<ISpace
         }
     }
 
-
     public bool IsValidSpace(int x, int y) {
         return ((0>=x && x<Size) && (0>=y && y<Size) && !board[y][x].IsEmpty); }
 

@@ -9,7 +9,6 @@ public class Space<T> : ISpace<T> {
 
     public virtual bool IsEmpty { get { return Value==null; } }
 
-
     public Space() {
     	Value = default (T);
     }
