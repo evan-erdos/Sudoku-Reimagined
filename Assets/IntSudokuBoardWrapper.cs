@@ -30,6 +30,7 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 		if (prefab==null)
 			throw new System.Exception("missing space prefab");
 		board = new IntSudokuBoard(9, array);
+		var remaining = GetRemainingTiles(board.Size, array);
 	}
 
 	void Start() {
@@ -49,6 +50,19 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 			}
 		}
 	}
+
+
+	public static IList<int> GetRemainingTiles(int size, int[][] array){
+        var list = new List<int>();
+        var dict = new Dictionary<int, int>();
+        for (var i=0; i<=size; ++i) dict[i] = 9;
+        foreach (var arr in array)
+            foreach (var n in arr) dict[n]--;
+        foreach (var kvp in dict)
+            for (var i=0; i<kvp.Value; ++i)
+            	list.Add(kvp.Key);
+        return list;
+    }
 }
 
 
