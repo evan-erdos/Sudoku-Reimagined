@@ -46,10 +46,13 @@ public class IntSpaceWrapper : MonoBehaviour, ISpace<int> {
     public IEnumerator OnMouseOver() {
         if (isRevealed) yield break;
         while (!isRevealed) {
-        	if (Input.GetButton("Fire1")) {
-        		Reveal();
-        		yield break;
+        	if (Input.GetButtonDown("Fire1")) {
+        		Reveal(); yield break;
         	} else yield return new WaitForEndOfFrame();
         }
+    }
+
+    public void OnMouseExit() {
+    	StopAllCoroutines();
     }
 }
