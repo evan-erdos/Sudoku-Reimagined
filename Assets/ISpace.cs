@@ -20,7 +20,7 @@ public interface ISpace<T> {
 	 *
 	 * A value of the underlying type to be put in this space.
 	 **/
-    T Value {get;}
+    T Value {get;set;}
 
 
     /** `IsEmpty` : **`bool`**

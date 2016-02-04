@@ -8,6 +8,14 @@ using System.Collections.Generic;
 
 public class IntSudokuBoard : SudokuBoard<int> {
 
+
+	public IntSudokuBoard() : base(9) { }
+
+    public IntSudokuBoard(int size) : base(size) { }
+
+    public IntSudokuBoard(int size, IList<IList<ISpace<int>>> board)
+    	: base(size,board) { }
+
     public override bool IsRowValid(int n) {
 		return IsValid(GetRow(n));
     }
