@@ -28,6 +28,7 @@ public class IntSpaceWrapper : MonoBehaviour, ISpace<int> {
 
     public void SetSpace(int n) {
     	space.Value = n;
+    	textMesh.gameObject.GetComponent<Renderer>().enabled = (space.Value>0);
     	textMesh.text = space.Value.ToString();
     }
 }
