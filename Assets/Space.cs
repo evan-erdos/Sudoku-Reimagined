@@ -5,10 +5,16 @@ using System.Collections.Generic;
 
 public class Space<T> : ISpace<T> {
 
-    public T Value {
-        get { return value; }
-    } protected T value;
+    public T Value {get;set;}
 
     public virtual bool IsEmpty { get { return Value==null; } }
 
+
+    public Space() {
+    	Value = default (T);
+    }
+
+    public Space(T value) {
+        Value = value;
+    }
 }
