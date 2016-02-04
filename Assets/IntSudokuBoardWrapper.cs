@@ -15,6 +15,8 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 
 	public GameObject prefab;
 
+
+
 	void Awake() {
 		int[][] oldarray = new int[][] {
             new int[] {0,0,0,0,4,0,0,9,0},
@@ -36,10 +38,16 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 			new int[] {4,8,1,3,2,5,9,7,6},
 			new int[] {5,3,7,6,8,9,4,1,2},
 			new int[] {6,9,2,7,4,1,8,3,5}};
+
+		int[] numPlaySequence = {1, 2, 3, 4,
+			4, 3, 2, 1,
+			1, 2, 3, 4,
+			4, 3, 2, 1
+		};
 		if (prefab==null)
 			throw new System.Exception("missing space prefab");
-		board = new IntSudokuBoard(9, array);
-		var remaining = GetRemainingTiles(board.Size, array);
+		board = new IntSudokuBoard(4, numPlaySequence);
+		//var remaining = GetRemainingTiles(board.Size, array);
 	}
 
 	void Start() {
