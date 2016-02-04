@@ -8,14 +8,10 @@ using System.Collections.Generic;
 
 public abstract class SudokuBoard<T> : MonoBehaviour, ISudokuBoard<T> {
 
-    public int Width {
-    	get { return (int) width; }
-   	} protected uint width;
-
-    public int Height {
-    	get { return (int) height; }
-   	} protected uint height;
-
+    public int Size {
+		get { return (int) size; }
+   	} protected uint size;
+		
    	public T Total {
    		get { return total; }
    	} protected T total;
@@ -33,10 +29,10 @@ public abstract class SudokuBoard<T> : MonoBehaviour, ISudokuBoard<T> {
    	}
 
    	public bool IsValidSpace(int x, int y) {
-   		return ((0>=x && x<Width) && (0>=y && y<Height) && !board[y][x].IsEmpty); }
+		return ((0>=x && x<Size) && (0>=y && y<Size) && !board[y][x].IsEmpty); }
 
    	public IList<ISpace<T>> GetRow(int n) {
-   		if (0>n || n>=Width)
+		if (0>n || n>=Size)
    			throw new System.Exception("Bad row index");
    		IList<ISpace<T>> list = new List<ISpace<T>>();
    		foreach (var space in board[n])
@@ -46,13 +42,33 @@ public abstract class SudokuBoard<T> : MonoBehaviour, ISudokuBoard<T> {
 
 
    	public IList<ISpace<T>> GetCol(int n) {
-   		if (0>n || n>=Height)
+		if (0>n || n>=Size)
    			throw new System.Exception("Bad col index");
    		IList<ISpace<T>> list = new List<ISpace<T>>();
    		foreach (var row in board)
    			list.Add(row[n]);
    		return list;
    	}
+
+	public IList<ISpace<T>> GetBlock(int n) {
+		// TODO: Size should be square
+		if (0 > n || n >= Size)
+			throw new System.Exception("Bad block index");
+
+		/* We assume that Size is a valid square */
+		int sizeSqrt = (int) Mathf.Sqrt (Size);
+		int rowShift = n / sizeSqrt;
+		int colShift = n % sizeSqrt;
+
+		/* Iterate through the block */
+		IList<ISpace<T>> list = new List<ISpace<T>>();
+		for (int i = 0; i < Size/2; i++)
+			for (int j = 0; i < Size/2; j++)
+				list.Add(board[i + rowShift][j + colShift]);
+		
+		return list;
+	
+	}
 
    	public abstract bool IsValid(IList<ISpace<T>> list);
 
@@ -61,6 +77,8 @@ public abstract class SudokuBoard<T> : MonoBehaviour, ISudokuBoard<T> {
    	public abstract bool IsColValid(int n);
 
 	public abstract bool IsBlockValid(int n);
+
+	public abstract int Score ();
 
 	public abstract bool IsMoveValid(Move<T> move);
 }

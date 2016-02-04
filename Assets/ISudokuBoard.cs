@@ -15,18 +15,11 @@ using System.Collections.Generic;
 public interface ISudokuBoard<T> {
 
 
-	/** `Width` : **`int`**
+	/** `Size` : **`int`**
 	 *
-	 * width of the board
+	 * size of the sizeXsize square board
 	 **/
-	int Width {get;}
-
-
-	/** `Height` : **`int`**
-	 *
-	 * height of the board
-	 **/
-	int Height {get;}
+	int Size {get;}
 
 
 	/** `Board` : **`ISpace<T>[][]`**
@@ -43,6 +36,9 @@ public interface ISudokuBoard<T> {
 	bool IsColValid(int n);
 
 	bool IsBlockValid(int n);
+
+	/** Computes current score of the board */
+	int Score ();
 
 	bool IsMoveValid(Move<T> move);
 }
