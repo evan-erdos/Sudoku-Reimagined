@@ -39,13 +39,17 @@ public class IntSpaceWrapper : MonoBehaviour, ISpace<int> {
     }
 
 
-    public IEnumerator Reveal() {
+    public IEnumerator MakeMove() {
     	if (wait) yield break;
     	wait = true;
     	isRevealed = true;
+
+		//Change material for 
+		board.SwitchPlayer();
+
     	SetSpace(board.board.GetNext().Value);
         board.PrintNext();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
     	wait = false;
     }
 
@@ -54,7 +58,7 @@ public class IntSpaceWrapper : MonoBehaviour, ISpace<int> {
         if (isRevealed) yield break;
         while (!isRevealed) {
         	if (Input.GetButtonDown("Fire1"))
-        		yield return StartCoroutine(Reveal());
+        		yield return StartCoroutine(MakeMove());
         	else yield return new WaitForEndOfFrame();
         }
     }

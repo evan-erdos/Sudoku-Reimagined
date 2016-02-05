@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
+[RequireComponent(typeof(Renderer))]
 public class IntSudokuBoardWrapper : MonoBehaviour {
 
 	public IntSudokuBoard board;
@@ -16,6 +17,14 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 	public IntTileSet tileSet;
 
 	public GameObject prefab;
+
+	public bool Player1Turn {
+		get { return player1Turn; }
+	} protected bool player1Turn;
+
+	Material player1Mat;
+	Material player2Mat;
+
 
 	void Awake() {
 #if SOLVED_BOARD
@@ -46,6 +55,9 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 	}
 
 	void Start() {
+		this.player1Turn = true;
+		this.player1Mat = (Material)Resources.Load("Assets/BoardMat", typeof(Material));
+		this.player2Mat = (Material)Resources.Load("splash-video", typeof(Material));
 		var x=0f;
 		foreach (var list in board.Board) {
 			x += size;
@@ -73,6 +85,21 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 		foreach (var elem in board.PlaySequence)
 			s += elem+", ";
 		tileSet.Print(s);
+	}
+
+	public void SwitchPlayer() {
+		this.player1Turn = !this.player1Turn;
+		// TODO: Clean this up. names should not be in this function
+		Renderer rend = transform.GetChild(0).GetComponent<Renderer>();
+		if (Player1Turn) {
+			Debug.Log ("Loading player 1 mat");
+			rend.material = this.player1Mat;
+		} else {
+			Debug.Log ("Loading player 2 mat");
+			rend.material = this.player2Mat;
+		}
+
+		// switch material
 	}
 
 

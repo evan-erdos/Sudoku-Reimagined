@@ -15,7 +15,7 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<IList<ISpace
     public T Total {
         get { return total; }
     } protected T total;
-
+		
 	public Queue<T> PlaySequence {
 		get { return playSequence; }
         set { playSequence = value; }
