@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+
 [RequireComponent(typeof(Rigidbody))]
 public class IntSpaceWrapper : MonoBehaviour, ISpace<int> {
 
@@ -27,8 +28,10 @@ public class IntSpaceWrapper : MonoBehaviour, ISpace<int> {
     void Awake() {
     	gameObject.GetComponent<Rigidbody>().isKinematic = true;
     	textMesh = GetComponentInChildren<TextMesh>();
-    	if (textMesh==null)
-    		throw new System.Exception("No render text");
+        if (textMesh==null)
+            throw new System.Exception("No render text");
+        if (GetComponentInChildren<Renderer>()==null)
+            throw new System.Exception("No renderer");
     }
 
     public void SetSpace(int n) {
@@ -38,14 +41,19 @@ public class IntSpaceWrapper : MonoBehaviour, ISpace<int> {
     	textMesh.text = space.Value.ToString();
     }
 
+    public void ApplyPlayerMaterial(Material material) {
+        GetComponentInChildren<Renderer>().material = material;
+    }
 
-    public IEnumerator Reveal() {
+
+    public IEnumerator MakeMove() {
     	if (wait) yield break;
     	wait = true;
     	isRevealed = true;
     	SetSpace(board.board.GetNext().Value);
         board.PrintNext();
-        yield return new WaitForSeconds(0.5f);
+        ApplyPlayerMaterial(board.SwitchPlayer());
+        yield return new WaitForSeconds(0.1f);
     	wait = false;
     }
 
@@ -54,7 +62,7 @@ public class IntSpaceWrapper : MonoBehaviour, ISpace<int> {
         if (isRevealed) yield break;
         while (!isRevealed) {
         	if (Input.GetButtonDown("Fire1"))
-        		yield return StartCoroutine(Reveal());
+        		yield return StartCoroutine(MakeMove());
         	else yield return new WaitForEndOfFrame();
         }
     }

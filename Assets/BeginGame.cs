@@ -12,10 +12,10 @@ public class BeginGame : MonoBehaviour {
 
     void Start() {
         movie = (MovieTexture) GetComponent<Renderer>().material.mainTexture;
-        movie.Play();
         movie.loop = true;
-        CameraFade.StartAlphaFade(
-            new Color(0,0,0),true,2f,0f);
+        movie.Play();
+        //CameraFade.StartAlphaFade(
+        //    new Color(0,0,0),true,2f,0f);
         StartCoroutine(StartGame(12f));
     }
 

@@ -4,8 +4,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-
 public class IntSudokuBoardWrapper : MonoBehaviour {
+
+	public bool player1Turn;
 
 	public IntSudokuBoard board;
 
@@ -14,6 +15,8 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 	public IList<GameObject> spaces = new List<GameObject>();
 
 	public IntTileSet tileSet;
+
+	public Material player1Mat, player2Mat;
 
 	public GameObject prefab;
 
@@ -43,6 +46,8 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 		//var remaining = GetRemainingTiles(board.Size, array);
 		if (tileSet==null)
 			throw new System.Exception("missing tileset");
+		if (player1Mat==null || player2Mat==null)
+    		throw new System.Exception("bad materials");
 	}
 
 	void Start() {
@@ -64,12 +69,17 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 		}
 	}
 
+	public Material SwitchPlayer() {
+		player1Turn = !player1Turn;
+		return ((player1Turn)?(player1Mat):(player2Mat));
+	}
+
 	public ISpace<int> GetNext() {
         return board.GetNext();
     }
 
 	public void PrintNext() {
-		var s = "Up Next: ";
+		var s = "Up Next: \n";
 		foreach (var elem in board.PlaySequence)
 			s += elem+", ";
 		tileSet.Print(s);
