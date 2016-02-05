@@ -13,6 +13,8 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 
 	public IList<GameObject> spaces = new List<GameObject>();
 
+	public IntTileSet tileSet;
+
 	public GameObject prefab;
 
 	void Awake() {
@@ -39,6 +41,8 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 		//board = new IntSudokuBoard(9, array);
 		board = new IntSudokuBoard(4, numPlaySequence);
 		//var remaining = GetRemainingTiles(board.Size, array);
+		if (tileSet==null)
+			throw new System.Exception("missing tileset");
 	}
 
 	void Start() {
@@ -54,10 +58,21 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 					Quaternion.identity) as GameObject);
 				instance.transform.parent = this.transform;
 				instance.GetComponent<IntSpaceWrapper>().Value = space.Value;
-				instance.GetComponent<IntSpaceWrapper>().board = this.board;
+				instance.GetComponent<IntSpaceWrapper>().board = this;
 				spaces.Add(instance);
 			}
 		}
+	}
+
+	public ISpace<int> GetNext() {
+        return board.GetNext();
+    }
+
+	public void PrintNext() {
+		var s = "Up Next: ";
+		foreach (var elem in board.PlaySequence)
+			s += elem+", ";
+		tileSet.Print(s);
 	}
 
 

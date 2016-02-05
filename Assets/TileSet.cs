@@ -1,15 +1,8 @@
 ﻿using UnityEngine;
+using ui=UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
-public class TileSet : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-}
+[RequireComponent(typeof(ui::Text))]
+public class TileSet<T> : MonoBehaviour { }

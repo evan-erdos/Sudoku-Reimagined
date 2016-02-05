@@ -11,14 +11,14 @@ public class IntSpaceWrapper : MonoBehaviour, ISpace<int> {
 
 	bool wait, isRevealed;
 
-	public ISudokuBoard<int> board;
+	public IntSudokuBoardWrapper board;
 
 	TextMesh textMesh;
 
     public int Value {
     	get { return space.Value; }
     	set { space.Value = value;
-    		SetSpace(space.Value);
+            SetSpace(space.Value);
     	}
     }
 
@@ -43,8 +43,9 @@ public class IntSpaceWrapper : MonoBehaviour, ISpace<int> {
     	if (wait) yield break;
     	wait = true;
     	isRevealed = true;
-    	SetSpace(board.GetNext().Value);
-    	yield return new WaitForSeconds(0.5f);
+    	SetSpace(board.board.GetNext().Value);
+        board.PrintNext();
+        yield return new WaitForSeconds(0.5f);
     	wait = false;
     }
 
