@@ -31,7 +31,7 @@ public class IntSudokuBoard : SudokuBoard<int> {
     }
 
     public override bool IsBlockValid(int n) {
-		return IsValid(GetBlock(n));
+		return false;//IsValid(GetBlock(n));
     }
 
     public override bool IsValid(IList<ISpace<int>> list) {

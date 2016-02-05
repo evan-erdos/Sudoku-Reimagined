@@ -16,6 +16,9 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<IList<ISpace
         get { return total; }
     } protected T total;
 
+    public bool IsFinished {
+        get { return PlaySequence.Count<=0; } }
+
 	public Queue<T> PlaySequence {
 		get { return playSequence; }
         set { playSequence = value; }
@@ -105,14 +108,13 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<IList<ISpace
     }
 
     public IList<ISpace<T>> GetBlock(int n) {
-        // TODO: Size should be square
-        if (0 > n || n >= Size)
+#if BOUND
+        if (0 > n || n >= Size*Size)
             throw new System.Exception("Bad block index");
 
         /* We assume that Size is a valid square */
-        int sizeSqrt = (int) Mathf.Sqrt (Size);
-        int rowShift = n / sizeSqrt;
-        int colShift = n % sizeSqrt;
+        int rowShift = n / Size;
+        int colShift = n % Size;
 
         /* Iterate through the block */
         IList<ISpace<T>> list = new List<ISpace<T>>();
@@ -121,6 +123,8 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<IList<ISpace
                 list.Add(board[i + rowShift][j + colShift]);
 
         return list;
+#endif
+        return new List<ISpace<T>>();
     }
 
     IEnumerator IEnumerable.GetEnumerator() {

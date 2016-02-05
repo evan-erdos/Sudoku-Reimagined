@@ -12,6 +12,8 @@ public class IntSpaceWrapper : MonoBehaviour, ISpace<int> {
 
 	bool wait, isRevealed;
 
+    public AudioClip clip;
+
 	public IntSudokuBoardWrapper board;
 
 	TextMesh textMesh;
@@ -52,8 +54,11 @@ public class IntSpaceWrapper : MonoBehaviour, ISpace<int> {
     	isRevealed = true;
     	SetSpace(board.board.GetNext().Value);
         board.PrintNext();
+        if (clip)
+            AudioSource.PlayClipAtPoint(clip, new Vector3(0f,0f,-10f));
         ApplyPlayerMaterial(board.SwitchPlayer());
-        yield return new WaitForSeconds(0.1f);
+        if (board.board.IsFinished) board.Restart();
+        yield return new WaitForSeconds(0.05f);
     	wait = false;
     }
 

@@ -13,8 +13,11 @@ public class IntTileSet : TileSet<int> {
 
 	protected ui::Text uiText;
 
+	public ui::Text scoreText;
+
 	void Awake() {
 		uiText = GetComponent<ui::Text>();
+		//scoreText = GetComponentInChildren<ui::Text>();
 
 		Tiles = new List<ISpace<int>>();
 		for (var i=1; i<Size; ++i)
@@ -23,5 +26,9 @@ public class IntTileSet : TileSet<int> {
 
 	public void Print(string s) {
 		uiText.text = s;
+	}
+
+	public void PrintScore(int n) {
+		scoreText.text = ("Score: "+n);
 	}
 }

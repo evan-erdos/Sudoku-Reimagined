@@ -1,12 +1,13 @@
 /* Ben Scott * bescott@andrew.cmu.edu * 2016-02-03 * SudokuBoard */
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
 public class IntSudokuBoardWrapper : MonoBehaviour {
 
-	public bool player1Turn;
+	public bool wait, player1Turn;
 
 	public IntSudokuBoard board;
 
@@ -69,6 +70,17 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 		}
 	}
 
+	public IEnumerator Restarting() {
+		if (wait) yield break;
+		wait = true;
+		yield return new WaitForSeconds(4f);
+		SceneManager.LoadScene("Sudoku");
+		wait = false;
+	}
+
+	public void Restart() {
+		StartCoroutine(Restarting()); }
+
 	public Material SwitchPlayer() {
 		player1Turn = !player1Turn;
 		return ((player1Turn)?(player1Mat):(player2Mat));
@@ -83,6 +95,7 @@ public class IntSudokuBoardWrapper : MonoBehaviour {
 		foreach (var elem in board.PlaySequence)
 			s += elem+", ";
 		tileSet.Print(s);
+		tileSet.PrintScore(board.Score());
 	}
 
 
