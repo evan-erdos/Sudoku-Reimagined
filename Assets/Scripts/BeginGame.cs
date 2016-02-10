@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -38,7 +37,7 @@ public class BeginGame : MonoBehaviour {
                     CameraClearFlags.SolidColor;
                 Camera.main.backgroundColor =
                     new Color(0,0,0);
-                SceneManager.LoadScene("Sudoku");});
+                Application.LoadLevel(1);});
 		yield return new WaitForSeconds(delay);
 	}
 }

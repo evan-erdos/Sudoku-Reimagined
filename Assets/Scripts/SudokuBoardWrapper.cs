@@ -1,7 +1,6 @@
 /* Ben Scott * bescott@andrew.cmu.edu * 2016-02-03 * SudokuBoard */
 
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -74,7 +73,7 @@ public class SudokuBoardWrapper : MonoBehaviour {
 		if (wait) yield break;
 		wait = true;
 		yield return new WaitForSeconds(4f);
-		SceneManager.LoadScene("Sudoku");
+		Application.LoadLevel(1);
 		wait = false;
 	}
 
