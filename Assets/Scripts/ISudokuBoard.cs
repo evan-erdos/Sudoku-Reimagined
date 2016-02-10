@@ -40,6 +40,8 @@ public interface ISudokuBoard<T>
 
 	bool IsBlockValid(int n);
 
+	bool IsBoardValid ();
+
 	int Score();
 
 	T GetNext();

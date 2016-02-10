@@ -54,19 +54,19 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<IList<T>>
         }
     }
 
-    public SudokuBoard(int size, IList<IList<T>> board) {
-        this.size = (uint) size;
-        this.board = board;
-    }
+//    public SudokuBoard(int size, IList<IList<T>> board) {
+//        this.size = (uint) size;
+//        this.board = board;
+//    }
 
-    public SudokuBoard(int size, T[][] array) {
+    public SudokuBoard(int size, T[,] array) {
         this.size = (uint) size;
         this.board = new List<IList<T>>(Size);
         for (var i=0; i<Size; ++i) {
             var list = new List<T>(Size);
             this.board.Add(list);
-            //for (var j=0; j<Size; ++j)
-            //    list.Add(new Space<T>(array[j][i]));
+			for (var j=0; j<Size; ++j)
+                list.Add(array[i,j]);
         }
     }
 
@@ -142,11 +142,13 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<IList<T>>
 
     public abstract bool IsValid(IList<T> list);
 
-    public abstract bool IsRowValid(int n);
+    public abstract bool IsRowValid(int i);
 
-    public abstract bool IsColValid(int n);
+    public abstract bool IsColValid(int i);
 
-    public abstract bool IsBlockValid(int n);
+    public abstract bool IsBlockValid(int i);
+
+	public abstract bool IsBoardValid ();
 
     public abstract int Score();
 }
