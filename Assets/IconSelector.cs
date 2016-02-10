@@ -16,6 +16,6 @@ public class IconSelector : MonoBehaviour {
 	}
 
 	public GameObject CreateTile(Tiles tile){
-		return Object.Instantiate(tiles[(int) tile]);
+		return (Object.Instantiate(tiles[(int) tile]) as GameObject);
 	} 
 }
