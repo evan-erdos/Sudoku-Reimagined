@@ -3,7 +3,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Space<T> : ISpace<T> {
+public class Space<T> : MonoBehaviour, ISpace<T> {
 
     public T Value {get;set;}
 

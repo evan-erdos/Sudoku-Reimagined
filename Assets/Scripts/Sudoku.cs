@@ -10,9 +10,8 @@ public static class EnumUtil {
 }
 
 public enum Tiles : int {
-		Raise=0,
-		Lower=1,
-		Spout=2,
-		Level=3,
-		Block=4
+	Default=0,
+	Raise=1,
+	Lower=2,
+	Spout=3
 }

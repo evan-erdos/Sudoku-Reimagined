@@ -149,8 +149,6 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<IList<T>>
     public abstract bool IsBlockValid(int n);
 
     public abstract int Score();
-
-    public abstract bool IsMoveValid(Move<T> move);
 }
 
 

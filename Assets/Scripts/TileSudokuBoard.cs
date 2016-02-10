@@ -8,7 +8,6 @@ using System.Collections.Generic;
 
 public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 
-
 	public TileSudokuBoard() : base(9) { }
 
     public TileSudokuBoard(int size) : base(size) { }
@@ -65,10 +64,6 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 
 		return totalScore;
 	}
-
-    public override bool IsMoveValid(Move<ISpace<Tiles>> move) {
-		return board [move.x] [move.y].IsEmpty;
-    }
 }
 
 

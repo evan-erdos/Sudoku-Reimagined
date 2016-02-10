@@ -40,10 +40,7 @@ public interface ISudokuBoard<T>
 
 	bool IsBlockValid(int n);
 
-	/** Computes current score of the board */
-	int Score ();
-
-	bool IsMoveValid(Move<T> move);
+	int Score();
 
 	T GetNext();
 }
