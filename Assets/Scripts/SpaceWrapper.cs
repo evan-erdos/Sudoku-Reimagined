@@ -6,7 +6,10 @@ using System.Collections.Generic;
 
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(AudioSource))]
 public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
+
+    public GameObject prefab;
 
     public GameObject Current {
         get { return current; }
@@ -36,9 +39,11 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
         get { return (CurrentSpace!=null && CurrentSpace.IsEmpty); } }
 
     void Awake() {
-        gameObject.GetComponent<Rigidbody>().isKinematic = true;
-        if (GetComponentInChildren<Renderer>()==null)
-            throw new System.Exception("No renderer");
+        GetComponent<Rigidbody>().isKinematic = true;
+        var tile = Object.Instantiate(prefab) as GameObject;
+        tile.transform.parent = this.transform;
+        tile.transform.localPosition = Vector3.zero;
+        Current = tile;
     }
 
     public IEnumerator MakeMove() {
@@ -48,16 +53,15 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
         tile.transform.parent = this.transform;
         tile.transform.localPosition = Vector3.zero;
         Current = tile;
-        //if (clip)
-        //    AudioSource.PlayClipAtPoint(clip, new Vector3(0f,0f,-10f));
-        //if (board.board.IsFinished) board.Restart();
+        if (clip)
+            GetComponent<AudioSource>().PlayOneShot(clip);
         yield return new WaitForSeconds(0.05f);
         wait = false;
     }
 
     public IEnumerator OnMouseOver() {
         while (!wait) {
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonUp("Fire1"))
                 yield return StartCoroutine(MakeMove());
             else yield return new WaitForEndOfFrame();
         }

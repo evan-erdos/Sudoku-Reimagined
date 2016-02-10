@@ -13,5 +13,5 @@ public enum Tiles : int {
 	Default=0,
 	Raise=1,
 	Lower=2,
-	Spout=3
-}
+	Level=3,
+	Spout=4}
