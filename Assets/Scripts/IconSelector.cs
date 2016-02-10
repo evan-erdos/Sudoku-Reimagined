@@ -23,6 +23,8 @@ public class IconSelector : MonoBehaviour {
 	public void SetTile(Tiles tile) { Current = tile; }
 
 	public static GameObject CreateTile(Tiles tile) {
-		return (Object.Instantiate(globalTiles[(int) tile]) as GameObject);
+		var space = Object.Instantiate(globalTiles[(int) tile]) as GameObject;
+		space.GetComponent<ISpace<Tiles>>().Value = tile;
+		return space;
 	}
 }
