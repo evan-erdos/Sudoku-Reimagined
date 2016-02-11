@@ -20,7 +20,7 @@ public class SudokuBoardWrapper : MonoBehaviour {
 	public IList<GameObject> spaces = new List<GameObject>();
 
 
-	SpaceWrapper CreateWrapper(int x,int y) {
+	SpaceWrapper CreateSpaceWrapper(int x,int y) {
 		var instance = (Object.Instantiate(
 			prefab, transform.position + new Vector3(x*size+size,0f,y*size+size),
 			Quaternion.identity) as GameObject);
@@ -34,11 +34,11 @@ public class SudokuBoardWrapper : MonoBehaviour {
 	void Awake() {
 		if (prefab==null)
 			throw new System.Exception("missing spacewrapper prefab");
-		var arr = new ISpace<Tiles>[dimensions, dimensions];
+		var spaceArr = new ISpace<Tiles>[dimensions, dimensions];
 		for (var i=0; i<dimensions; ++i)
 			for (var j=0; j<dimensions; ++j)
-				arr[i,j] = CreateWrapper(i,j);
-		board = new TileSudokuBoard((int) dimensions);
+				spaceArr[i,j] = CreateSpaceWrapper(i,j);
+		board = new TileSudokuBoard((int) dimensions, spaceArr);
 	}
 
 	public IEnumerator Restarting() {

@@ -12,10 +12,10 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 
     public TileSudokuBoard(int size) : base(size) { }
 
-    public TileSudokuBoard(int size, IList<IList<ISpace<Tiles>>> board)
-    	: base(size,board) { }
+//    public TileSudokuBoard(int size, IList<IList<ISpace<Tiles>>> board)
+//    	: base(size,board) { }
 
-    public TileSudokuBoard(int size, ISpace<Tiles>[][] array)
+    public TileSudokuBoard(int size, ISpace<Tiles>[,] array)
     	: base(size,array) { }
 
 	public TileSudokuBoard(int size, ISpace<Tiles>[] playSequence)
@@ -34,35 +34,46 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
     }
 
     public override bool IsValid(IList<ISpace<Tiles>> list) {
+
 		if (list.Count != Size) return false;
 
-		/* Convert to a list of ints to make it easier to valid */
-		var tiles = new List<ISpace<Tiles>>();
-		foreach (var space in list)
-			tiles.Add(space);
-#if OLD
-		tiles.Sort();
-		for (int i = 0; i < Size; i++) {
-			if (tiles [i] != i + 1)
-				return false;
+		/* Check that there is no more than 1 of each special piece in line */
+		var uniqueSeen = new HashSet<Tiles> ();
+		foreach (var space in list) {
+			if (space.Value != Tiles.Default) {
+				if (uniqueSeen.Contains(space.Value))
+					return false;
+				uniqueSeen.Add (space.Value);
+			}
 		}
-#endif
+
         return true;
     }
 
-	public override int Score() {
-		int totalScore = 0;
+	public override bool IsBoardValid() {
 
 		for (int i = 0; i < Size; i++) {
-			if (IsRowValid (i))
-				totalScore++;
-			if (IsColValid (i))
-				totalScore++;
-			if (IsBlockValid (i))
-				totalScore++;
+			if (!(IsRowValid (i) && IsColValid (i)))
+				return false;
 		}
 
-		return totalScore;
+		return  true;
+	}
+
+	public override int Score() {
+//		int totalScore = 0;
+//
+//		for (int i = 0; i < Size; i++) {
+//			if (IsRowValid (i))
+//				totalScore++;
+//			if (IsColValid (i))
+//				totalScore++;
+//			if (IsBlockValid (i))
+//				totalScore++;
+//		}
+//
+//		return totalScore;
+		return 0;
 	}
 }
 
