@@ -46,7 +46,7 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
         CurrentTile = tile;
     }
 
-    public IEnumerator MakeMove() {
+    public IEnumerator MakeMoveCoroutine() {
         if (wait) yield break;
         wait = true;
 
@@ -54,42 +54,58 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
 		// TODO: Check if IconSelector really has anything meaningful selected
 
 
+		MakeMove ();
+        yield return new WaitForSeconds(0.05f);
+        wait = false;
+    }
+
+	public void MakeMove() {
+		// BUG: What if player clicks really fast and changes IconSelector.Current before this function can run?
+		// TODO: Check if IconSelector really has anything meaningful selected
+
 		Tiles oldTileVal = CurrentSpace.Value;
 		CurrentSpace.Value = IconSelector.Current;
-		/* Check that move is valid */
 
 		Debug.Log ("About to check if board is valid!");
 
+		/* Check that move is valid */
 		if (board.board.IsBoardValid()) {
 			var newTile = IconSelector.CreateTile(IconSelector.Current);
 			CurrentTile = newTile;
+			CurrentSpace.Direction = IconSelector.CurrentSelectDir;
 			newTile.transform.parent = this.transform;
 			newTile.transform.localPosition = Vector3.zero;
+
+			var rotation = new Vector3 (0, (90f * (float)(CurrentSpace.Direction)), 0);
+			newTile.transform.Rotate (rotation);
 			Debug.Log ("Valid move made!");
 		} else {
 			CurrentSpace.Value = oldTileVal;
 			Debug.Log ("That was not a valid move!");
 		}
 
+		if (clip)
+			GetComponent<AudioSource>().PlayOneShot(clip);
+	}
 
-//
-//
-//		var tile = IconSelector.CreateTile(IconSelector.Current);
-//        tile.transform.parent = this.transform;
-//        tile.transform.localPosition = Vector3.zero;
-       // Current = tile;
-        if (clip)
-            GetComponent<AudioSource>().PlayOneShot(clip);
-        yield return new WaitForSeconds(0.05f);
-        wait = false;
-    }
 
-    public IEnumerator OnMouseOver() {
-        while (!wait) {
-            if (Input.GetButtonUp("Fire1"))
-                yield return StartCoroutine(MakeMove());
-            else yield return new WaitForEndOfFrame();
-        }
+    public void OnMouseOver() {
+		Debug.Log ("Mouse over!");
+
+
+		if (Input.GetButtonUp ("Fire1")) {
+			Debug.Log ("Button press!");
+			MakeMove ();
+		}
+
+
+//        while (!wait) {
+//			if (Input.GetButtonUp ("Fire1")) {
+//				Debug.Log ("Button press!");
+//				yield return StartCoroutine (MakeMoveCoroutine ());
+//			}
+//            else yield return new WaitForEndOfFrame();
+//        }
     }
 
     public void OnMouseExit() {
