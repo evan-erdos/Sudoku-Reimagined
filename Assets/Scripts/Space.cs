@@ -7,5 +7,7 @@ public class Space<T> : MonoBehaviour, ISpace<T> {
 
     public T Value {get;set;}
 
+	public Dir Direction { get; set; }
+
     public virtual bool IsEmpty { get { return Value==null; } }
 }

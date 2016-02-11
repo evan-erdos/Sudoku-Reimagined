@@ -15,3 +15,10 @@ public enum Tiles : int {
 	Lower=2,
 	Level=3,
 	Spout=4}
+
+
+public enum Dir : int {
+	Up=0, 
+	Right=1, 
+	Down=2, 
+	Left=3}
