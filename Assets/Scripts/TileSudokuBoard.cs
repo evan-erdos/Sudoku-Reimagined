@@ -93,15 +93,11 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 		ISpace<Tiles> currSpace = this[x,y];
 
 		/* For every iteration of this loop, assume:
-		 * * currSpace alredy has water
-		 * * All previous spaces had water
+		 * * All previous spaces have water
 		 */
-		//int n = 1600;
 		while (currSpace != null && currSpace.Value != Tiles.Default &&
 				!currSpace.HasWater) {
-			//n--;
-			//if (n<1)
-			//	throw new System.Exception("holy shit!");
+	
 			currSpace.HasWater = true;
 			Debug.Log("Space with coords("+ x + "," +
 				y + ") has water! (and dir is:");
