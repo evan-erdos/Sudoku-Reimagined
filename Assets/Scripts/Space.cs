@@ -9,5 +9,7 @@ public class Space<T> : MonoBehaviour, ISpace<T> {
 
 	public Dir Direction { get; set; }
 
+	public bool HasWater { get; set; }
+
     public virtual bool IsEmpty { get { return Value==null; } }
 }
