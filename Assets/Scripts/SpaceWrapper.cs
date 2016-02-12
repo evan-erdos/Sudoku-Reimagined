@@ -35,6 +35,20 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
         }
     }
 
+	public Dir Direction {
+		get { return CurrentSpace.Direction; }
+		set { if (CurrentSpace==null) return;
+			CurrentSpace.Direction = value;
+		}
+	}
+
+	public bool HasWater { 
+		get { return (CurrentSpace!=null && CurrentSpace.HasWater); } 
+		set { if (CurrentSpace==null) return;
+			CurrentSpace.HasWater = value;
+		}
+	}
+
     public bool IsEmpty {
         get { return (CurrentSpace!=null && CurrentSpace.IsEmpty); } }
 
@@ -78,6 +92,9 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
 
 			var rotation = new Vector3 (0, (90f * (float)(CurrentSpace.Direction)), 0);
 			newTile.transform.Rotate (rotation);
+
+			board.board.UpdateWater ();
+
 			Debug.Log ("Valid move made!");
 		} else {
 			CurrentSpace.Value = oldTileVal;
@@ -90,7 +107,8 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
 
 
     public void OnMouseOver() {
-		Debug.Log ("Mouse over!");
+		Debug.Log ("Mouse over! Value of this tile is");
+		Debug.Log (Value);
 
 
 		if (Input.GetButtonUp ("Fire1")) {
