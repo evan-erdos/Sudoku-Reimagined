@@ -89,6 +89,42 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<IList<T>>
     public bool IsValidSpace(int x, int y) {
         return ((0>=x && x<Size) && (0>=y && y<Size) && !board[y][x].IsEmpty); }
 
+	public T GetSpace(Coordinates coords) {
+		if (!( 0 <= coords.x && coords.x < Size && 
+			0 <= coords.y && coords.y < Size))
+			return default(T);
+		
+		return board[coords.x][coords.y];
+	}
+
+	public T GetNextSpace(Coordinates coords, Dir dir) {
+		switch (dir) {
+		case Dir.Up:
+			return board [coords.x] [coords.y - 1];
+		case Dir.Down:
+			return board [coords.x] [coords.y + 1];
+		case Dir.Left:
+			return board [coords.x - 1] [coords.y];
+		case Dir.Right:
+			return board [coords.x + 1] [coords.y];
+		}
+		return default(T);
+	}
+
+	public Coordinates GetNextSpaceCoords(Coordinates coords, Dir dir) {
+		switch (dir) {
+		case Dir.Up:
+			return new Coordinates (coords.x, coords.y - 1);
+		case Dir.Down:
+			return new Coordinates (coords.x, coords.y + 1);
+		case Dir.Left:
+			return new Coordinates (coords.x - 1, coords.y);
+		case Dir.Right:
+			return new Coordinates (coords.x + 1, coords.y);
+		}
+		return null;
+	}
+
     public IList<T> GetRow(int n) {
         if (0>n || n>=Size)
             throw new System.Exception("Bad row index");
@@ -139,6 +175,8 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<IList<T>>
     public T GetNext() {
         return PlaySequence.Dequeue();
     }
+
+	public abstract void UpdateWater ();
 
     public abstract bool IsValid(IList<T> list);
 

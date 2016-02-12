@@ -23,6 +23,11 @@ public interface ISpace<T> {
     T Value {get;set;}
 
 
+	Dir Direction { get; set; }
+
+	bool HasWater { get; set; }
+
+
     /** `IsEmpty` : **`bool`**
      *
      * Checks against `Value` to determine if something can be

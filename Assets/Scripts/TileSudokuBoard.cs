@@ -8,6 +8,10 @@ using System.Collections.Generic;
 
 public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 
+	public Coordinates StartPos;
+
+	public Coordinates EndPos;
+
 	public TileSudokuBoard() : base(9) { }
 
     public TileSudokuBoard(int size) : base(size) { }
@@ -16,7 +20,10 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 //    	: base(size,board) { }
 
     public TileSudokuBoard(int size, ISpace<Tiles>[,] array)
-    	: base(size,array) { }
+    	: base(size,array) { 
+		StartPos = new Coordinates (0, 0);
+		EndPos = new Coordinates (3, 3);
+	}
 
 	public TileSudokuBoard(int size, ISpace<Tiles>[] playSequence)
 		: base(size, playSequence) { }
@@ -58,6 +65,70 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 		}
 
 		return  true;
+	}
+
+	private bool WaterCanFlow(Tiles currTile, Tiles nextTile) {
+
+		switch (nextTile) {
+		case Tiles.Default:
+			return false;
+		case Tiles.Raise:
+			return currTile == Tiles.Spout;
+		case Tiles.Level:
+			return currTile == Tiles.Raise || currTile == Tiles.Spout;
+		case Tiles.Lower:
+		case Tiles.Spout:
+			return true;
+		}
+		return false;
+
+		//TODO Throw error here
+	}
+
+	public override void UpdateWater() {
+
+		//bool waterStreamContinue = false;
+		Coordinates currSpaceCoords = new Coordinates(StartPos.x, StartPos.y);
+		ISpace<Tiles> currSpace = GetSpace (currSpaceCoords);
+
+		/* For every iteration of this loop, assume:
+		 * * currSpace alredy has water
+		 * * All previous spaces had water
+		 */
+		while (currSpace != null && currSpace.Value != Tiles.Default) {
+			
+			currSpace.HasWater = true;
+			Debug.Log ("Space with coords("+ currSpaceCoords.x.ToString() + "," +
+				currSpaceCoords.y.ToString() + ") has water! (and dir is:");
+			Debug.Log(currSpace.Direction);
+			Debug.Log(currSpace.Value);
+
+
+
+			Coordinates nextSpaceCoords = GetNextSpaceCoords (currSpaceCoords, currSpace.Direction);
+			Debug.Log ("Got next coordinates. They are ("+ nextSpaceCoords.x.ToString() + "," +
+				nextSpaceCoords.y.ToString() + ")");
+			
+			ISpace<Tiles> nextSpace = GetSpace (nextSpaceCoords); // GetNextSpace (currentSpaceCoords, currSpace.Direction);
+
+//			Debug.Log ("Got next space");
+
+
+			if (nextSpace == null) // Out of bounds
+				break;
+
+			Debug.Log(nextSpace.Value);
+
+			
+			if (WaterCanFlow (currSpace.Value, nextSpace.Value)) {
+				currSpace = nextSpace;
+				currSpaceCoords = nextSpaceCoords;
+			} else {
+				break;
+			}
+		
+		}
+
 	}
 
 	public override int Score() {
