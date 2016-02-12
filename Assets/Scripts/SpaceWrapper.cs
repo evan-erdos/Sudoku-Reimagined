@@ -54,7 +54,7 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
 		// TODO: Check if IconSelector really has anything meaningful selected
 
 
-		MakeMove ();
+		MakeMove();
         yield return new WaitForSeconds(0.05f);
         wait = false;
     }
@@ -73,6 +73,9 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
 			var newTile = IconSelector.CreateTile(IconSelector.Current);
 			CurrentTile = newTile;
 			CurrentSpace.Direction = IconSelector.CurrentSelectDir;
+            if (IconSelector.Current==Value)
+                CurrentSpace.Direction = (Dir)
+                    (((int) CurrentSpace.Direction+1)%4);
 			newTile.transform.parent = this.transform;
 			newTile.transform.localPosition = Vector3.zero;
 
@@ -90,8 +93,6 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
 
 
     public void OnMouseOver() {
-		Debug.Log ("Mouse over!");
-
 
 		if (Input.GetButtonUp ("Fire1")) {
 			Debug.Log ("Button press!");
