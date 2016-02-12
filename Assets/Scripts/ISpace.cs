@@ -22,10 +22,9 @@ public interface ISpace<T> {
 	 **/
     T Value {get;set;}
 
+	Dir Direction {get;set;}
 
-	Dir Direction { get; set; }
-
-	bool HasWater { get; set; }
+	bool HasWater {get;set;}
 
 
     /** `IsEmpty` : **`bool`**
