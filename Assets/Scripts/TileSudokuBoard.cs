@@ -8,25 +8,19 @@ using System.Collections.Generic;
 
 public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 
-	public Coordinates StartPos;
+	public int[] startPos;
 
-	public Coordinates EndPos;
+	public int[] endPos;
 
 	public TileSudokuBoard() : base(9) { }
 
     public TileSudokuBoard(int size) : base(size) { }
 
-//    public TileSudokuBoard(int size, IList<IList<ISpace<Tiles>>> board)
-//    	: base(size,board) { }
-
     public TileSudokuBoard(int size, ISpace<Tiles>[,] array)
-    	: base(size,array) { 
-		StartPos = new Coordinates (0, 0);
-		EndPos = new Coordinates (3, 3);
+    				: base(size,array) {
+		startPos = new int[] {0,0};
+		endPos = new int[] {3,3};
 	}
-
-	public TileSudokuBoard(int size, ISpace<Tiles>[] playSequence)
-		: base(size, playSequence) { }
 
     public override bool IsRowValid(int n) {
 		return IsValid(GetRow(n));
@@ -45,12 +39,12 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 		if (list.Count != Size) return false;
 
 		/* Check that there is no more than 1 of each special piece in line */
-		var uniqueSeen = new HashSet<Tiles> ();
+		var uniqueSeen = new HashSet<Tiles>();
 		foreach (var space in list) {
 			if (space.Value != Tiles.Default) {
 				if (uniqueSeen.Contains(space.Value))
 					return false;
-				uniqueSeen.Add (space.Value);
+				uniqueSeen.Add(space.Value);
 			}
 		}
 
@@ -81,52 +75,43 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 			return true;
 		}
 		return false;
-
-		//TODO Throw error here
 	}
 
 	public override void UpdateWater() {
 
 		//bool waterStreamContinue = false;
-		Coordinates currSpaceCoords = new Coordinates(StartPos.x, StartPos.y);
-		ISpace<Tiles> currSpace = GetSpace (currSpaceCoords);
+		int x = startPos[0], y = startPos[1];
+		ISpace<Tiles> currSpace = this[x,y];
 
 		/* For every iteration of this loop, assume:
 		 * * currSpace alredy has water
 		 * * All previous spaces had water
 		 */
-		while (currSpace != null && currSpace.Value != Tiles.Default) {
-			
+		int n = 1600;
+		while (currSpace != null && currSpace.Value != Tiles.Default && n>0) {
+			n--;
+			if (n<1)
+				throw new System.Exception("holy shit!");
 			currSpace.HasWater = true;
-			Debug.Log ("Space with coords("+ currSpaceCoords.x.ToString() + "," +
-				currSpaceCoords.y.ToString() + ") has water! (and dir is:");
+			Debug.Log("Space with coords("+ x + "," +
+				y + ") has water! (and dir is:");
 			Debug.Log(currSpace.Direction);
 			Debug.Log(currSpace.Value);
 
+			int[] next = GetNextSpaceCoords(x, y, currSpace.Direction);
+			Debug.Log("Got next coordinates. They are ("+ next[0] + "," +
+				next[1] + ")");
 
-
-			Coordinates nextSpaceCoords = GetNextSpaceCoords (currSpaceCoords, currSpace.Direction);
-			Debug.Log ("Got next coordinates. They are ("+ nextSpaceCoords.x.ToString() + "," +
-				nextSpaceCoords.y.ToString() + ")");
-			
-			ISpace<Tiles> nextSpace = GetSpace (nextSpaceCoords); // GetNextSpace (currentSpaceCoords, currSpace.Direction);
-
-//			Debug.Log ("Got next space");
-
-
-			if (nextSpace == null) // Out of bounds
-				break;
+			ISpace<Tiles> nextSpace = this[next[0],next[1]];
+			if (nextSpace==null) break; //out of bounds
 
 			Debug.Log(nextSpace.Value);
 
-			
-			if (WaterCanFlow (currSpace.Value, nextSpace.Value)) {
+			if (WaterCanFlow(currSpace.Value, nextSpace.Value)) {
 				currSpace = nextSpace;
-				currSpaceCoords = nextSpaceCoords;
-			} else {
-				break;
-			}
-		
+				x = next[0];
+				y = next[1];
+			} else break;
 		}
 
 	}

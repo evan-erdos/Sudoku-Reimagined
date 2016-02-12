@@ -22,8 +22,18 @@ public interface ISpace<T> {
 	 **/
     T Value {get;set;}
 
+
+    /** `Direction` : **`Dir`**
+     *
+     * This tile's current Y rotation.
+     **/
 	Dir Direction {get;set;}
 
+
+    /** `HasWater` : **`bool`**
+     *
+     * Denotes the presence of water on this tile.
+     **/
 	bool HasWater {get;set;}
 
 

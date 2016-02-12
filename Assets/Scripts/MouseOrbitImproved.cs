@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 [AddComponentMenu("Camera-Control/Mouse Orbit with zoom")]
 public class MouseOrbitImproved : MonoBehaviour {
 
@@ -53,9 +54,7 @@ public class MouseOrbitImproved : MonoBehaviour {
 
             RaycastHit hit;
             if (Physics.Linecast (target.position, transform.position, out hit))
-            {
-                distance -=  hit.distance;
-            }
+                distance -= hit.distance;
             Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
             Vector3 position = rotation * negDistance + target.position;
 
@@ -64,12 +63,10 @@ public class MouseOrbitImproved : MonoBehaviour {
         }
     }
 
-    public static float ClampAngle(float angle, float min, float max)
-    {
-        if (angle < -360F)
-            angle += 360F;
-        if (angle > 360F)
-            angle -= 360F;
+    public static float ClampAngle(float angle, float min, float max) {
+        if (angle < -360F) angle += 360F;
+        if (angle > 360F) angle -= 360F;
         return Mathf.Clamp(angle, min, max);
     }
 }
+

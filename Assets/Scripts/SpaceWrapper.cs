@@ -25,6 +25,7 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
     bool wait;
 
     public AudioClip clip;
+    public AudioClip failClip;
 
     public SudokuBoardWrapper board;
 
@@ -52,6 +53,7 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
     public bool IsEmpty {
         get { return (CurrentSpace!=null && CurrentSpace.IsEmpty); } }
 
+
     void Awake() {
         GetComponent<Rigidbody>().isKinematic = true;
         var tile = Object.Instantiate(prefab) as GameObject;
@@ -60,39 +62,26 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
         CurrentTile = tile;
     }
 
-    public IEnumerator MakeMoveCoroutine() {
+
+    public IEnumerator MakingMove() {
         if (wait) yield break;
         wait = true;
-
-		// BUG: What if player clicks really fast and changes IconSelector.Current before this function can run?
-		// TODO: Check if IconSelector really has anything meaningful selected
-
-
 		MakeMove();
         yield return new WaitForSeconds(0.05f);
         wait = false;
     }
 
 	public void MakeMove() {
-		// BUG: What if player clicks really fast and changes IconSelector.Current before this function can run?
-		// TODO: Check if IconSelector really has anything meaningful selected
-
-
 		Tiles oldTileVal = CurrentSpace.Value;
 		CurrentSpace.Value = IconSelector.Current;
-
-
-
-		Debug.Log ("About to check if board is valid!");
-
-		/* Check that move is valid */
 		if (board.board.IsBoardValid()) {
 			if (oldTileVal == CurrentSpace.Value) {
-				CurrentSpace.Direction = (Dir)(((int)CurrentSpace.Direction + 1) % 4);
-				Debug.Log ("Dir changed! new dir is:");
-				Debug.Log (CurrentSpace.Direction);
-				var rotation = new Vector3 (0, 90f, 0);
-				CurrentTile.transform.Rotate (rotation);
+				CurrentSpace.Direction = (Dir)
+                    (((int)CurrentSpace.Direction+90)%360);
+				//Debug.Log ("Dir changed! new dir is:");
+				//Debug.Log (CurrentSpace.Direction);
+				var rotation = new Vector3(0,(float) CurrentSpace.Direction,0);
+				CurrentTile.transform.Rotate(rotation);
 			} else {
 				var newTile = IconSelector.CreateTile(IconSelector.Current);
 				CurrentTile = newTile;
@@ -101,29 +90,24 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
 				newTile.transform.localPosition = Vector3.zero;
 			}
 
-			board.board.UpdateWater ();
-
-			Debug.Log ("Valid move made!");
+			board.board.UpdateWater();
+            if (clip)
+                GetComponent<AudioSource>().PlayOneShot(clip);
 		} else {
+            if (failClip)
+                GetComponent<AudioSource>().PlayOneShot(failClip);
 			CurrentSpace.Value = oldTileVal;
-			Debug.Log ("That was not a valid move!");
 		}
-
-		if (clip)
-			GetComponent<AudioSource>().PlayOneShot(clip);
 	}
 
 
-    public void OnMouseOver() {
+    public IEnumerator OnMouseOver() {
 		if (Input.GetButtonUp ("Fire1")) MakeMove();
-
-//        while (!wait) {
-//			if (Input.GetButtonUp ("Fire1")) {
-//				Debug.Log ("Button press!");
-//				yield return StartCoroutine (MakeMoveCoroutine ());
-//			}
-//            else yield return new WaitForEndOfFrame();
-//        }
+        while (!wait) {
+			if (Input.GetButtonUp("Fire1"))
+				yield return StartCoroutine(MakingMove());
+            else yield return new WaitForEndOfFrame();
+        }
     }
 
     public void OnMouseExit() {

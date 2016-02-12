@@ -3,6 +3,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+
 public static class EnumUtil {
 	public static IEnumerable<T> GetValues<T>() {
 		return System.Enum.GetValues(typeof(T)) as IEnumerable<T>;
@@ -18,8 +19,7 @@ public enum Tiles : int {
 
 
 public enum Dir : int {
-	Up=0,
-	Right=1,
-	Down=2,
-	Left=3}
-
+	East=0,
+	North=90,
+	West=180,
+	South=270}

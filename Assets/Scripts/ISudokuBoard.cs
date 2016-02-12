@@ -12,8 +12,7 @@ using System.Collections.Generic;
  *     the type to be stored in each space of the board
  *
  **/
-public interface ISudokuBoard<T>
-				where T : ISpace<Tiles> {
+public interface ISudokuBoard<T> where T : ISpace<Tiles> {
 
 
 	/** `Size` : **`int`**
@@ -23,12 +22,12 @@ public interface ISudokuBoard<T>
 	int Size {get;}
 
 
-	/** `Board` : **`ISpace<T>[][]`**
+	/** `Board` : **`T[][]`**
 	 *
 	 * A list of lists to represent the board. Consider this to
 	 * be a "list of rows", and index into it as such.
 	 **/
-	IList<IList<T>> Board {get;}
+	T[,] Board {get;}
 
 	Queue<T> PlaySequence {get;set;}
 
@@ -40,7 +39,7 @@ public interface ISudokuBoard<T>
 
 	bool IsBlockValid(int n);
 
-	bool IsBoardValid ();
+	bool IsBoardValid();
 
 	int Score();
 

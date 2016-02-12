@@ -9,7 +9,7 @@ public class SudokuBoardWrapper : MonoBehaviour {
 
 	public bool wait;
 
-	public uint dimensions = 4;
+	public uint dims = 4;
 
 	public float size = 1f;
 
@@ -21,9 +21,10 @@ public class SudokuBoardWrapper : MonoBehaviour {
 
 
 	SpaceWrapper CreateSpaceWrapper(int x,int y) {
-		var instance = (Object.Instantiate(
-			prefab, transform.position + new Vector3(x*size+size,0f,y*size+size),
-			Quaternion.identity) as GameObject);
+		var instance = Object.Instantiate(
+			prefab,
+			transform.position+new Vector3(x*size+size,0f,y*size+size),
+			Quaternion.identity) as GameObject;
 		instance.transform.parent = this.transform;
 		instance.GetComponent<SpaceWrapper>().Value = Tiles.Default;
 		instance.GetComponent<SpaceWrapper>().board = this;
@@ -34,11 +35,11 @@ public class SudokuBoardWrapper : MonoBehaviour {
 	void Awake() {
 		if (prefab==null)
 			throw new System.Exception("missing spacewrapper prefab");
-		var spaceArr = new ISpace<Tiles>[dimensions, dimensions];
-		for (var i=0; i<dimensions; ++i)
-			for (var j=0; j<dimensions; ++j)
+		var spaceArr = new ISpace<Tiles>[dims, dims];
+		for (var i=0; i<dims; ++i)
+			for (var j=0; j<dims; ++j)
 				spaceArr[i,j] = CreateSpaceWrapper(i,j);
-		board = new TileSudokuBoard((int) dimensions, spaceArr);
+		board = new TileSudokuBoard((int) dims, spaceArr);
 	}
 
 	public IEnumerator Restarting() {
@@ -54,22 +55,6 @@ public class SudokuBoardWrapper : MonoBehaviour {
 
 	public ISpace<Tiles> GetNext() {
         return board.GetNext();
-    }
-
-	public static IList<ISpace<Tiles>> GetRemainingTiles(int size, int[][] array) {
-#if IMPL
-        var list = new List<ISpace<Tiles>>();
-        var dict = new Dictionary<ISpace<Tiles>,int>();
-        for (var i=0; i<=size; ++i) dict[i] = 9;
-        foreach (var arr in array)
-            foreach (var n in arr) dict[n]--;
-        foreach (var kvp in dict)
-            for (var i=0; i<kvp.Value; ++i)
-            	list.Add(kvp.Key);
-        return list;
-#else
-		return new List<ISpace<Tiles>>();
-#endif
     }
 }
 

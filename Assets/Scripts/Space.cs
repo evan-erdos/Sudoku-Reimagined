@@ -3,6 +3,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+
 public class Space<T> : MonoBehaviour, ISpace<T> {
 
 	public GameObject water;
@@ -19,7 +20,8 @@ public class Space<T> : MonoBehaviour, ISpace<T> {
 		}
 	} bool hasWater;
 
-    public virtual bool IsEmpty { get { return Value==null; } }
+    public virtual bool IsEmpty {
+    	get { return Value==null; } }
 
     public virtual void Awake() {
     	if (!water)
