@@ -80,7 +80,7 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
                     (((int)CurrentSpace.Direction+90)%360);
 				//Debug.Log ("Dir changed! new dir is:");
 				//Debug.Log (CurrentSpace.Direction);
-				var rotation = new Vector3(0,(float) CurrentSpace.Direction,0);
+				var rotation = new Vector3(0,(float) -90,0);
 				CurrentTile.transform.Rotate(rotation);
 			} else {
 				var newTile = IconSelector.CreateTile(IconSelector.Current);
@@ -101,13 +101,13 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
 	}
 
 
-    public IEnumerator OnMouseOver() {
+    public void OnMouseOver() {
 		if (Input.GetButtonUp ("Fire1")) MakeMove();
-        while (!wait) {
-			if (Input.GetButtonUp("Fire1"))
-				yield return StartCoroutine(MakingMove());
-            else yield return new WaitForEndOfFrame();
-        }
+//        while (!wait) {
+//			if (Input.GetButtonUp("Fire1"))
+//				yield return StartCoroutine(MakingMove());
+//            else yield return new WaitForEndOfFrame();
+//        }
     }
 
     public void OnMouseExit() {
