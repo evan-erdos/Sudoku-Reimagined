@@ -8,7 +8,7 @@ public class IconSelector : MonoBehaviour {
 
 	static GameObject[] globalTiles;
 
-	public static Dir CurrentSelectDir {get;set;}
+	//public static Dir CurrentSelectDir {get;set;}
 
 	public static Tiles Current {get;set;}
 
@@ -24,10 +24,10 @@ public class IconSelector : MonoBehaviour {
 	public void SetTileSpout() { SetTile(Tiles.Spout); }
 
 	public void SetTile(Tiles tile) { 
-		if (tile == Current)
-			CurrentSelectDir = (Dir)(((int)CurrentSelectDir + 1) % 4);
-		else
-			CurrentSelectDir = 0;
+//		if (tile == Current)
+//			CurrentSelectDir = (Dir)(((int)CurrentSelectDir + 1) % 4);
+//		else
+//			CurrentSelectDir = 0;
 
 //		Debug.Log ("Current icon select dir:");
 //		Debug.Log (CurrentSelectDir);

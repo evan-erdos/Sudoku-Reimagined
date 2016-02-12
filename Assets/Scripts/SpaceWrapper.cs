@@ -77,21 +77,32 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
 		// BUG: What if player clicks really fast and changes IconSelector.Current before this function can run?
 		// TODO: Check if IconSelector really has anything meaningful selected
 
+
 		Tiles oldTileVal = CurrentSpace.Value;
 		CurrentSpace.Value = IconSelector.Current;
+
+
 
 		Debug.Log ("About to check if board is valid!");
 
 		/* Check that move is valid */
 		if (board.board.IsBoardValid()) {
-			var newTile = IconSelector.CreateTile(IconSelector.Current);
-			CurrentTile = newTile;
-			CurrentSpace.Direction = IconSelector.CurrentSelectDir;
-			newTile.transform.parent = this.transform;
-			newTile.transform.localPosition = Vector3.zero;
 
-			var rotation = new Vector3 (0, (90f * (float)(CurrentSpace.Direction)), 0);
-			newTile.transform.Rotate (rotation);
+
+			if (oldTileVal == CurrentSpace.Value) {
+				CurrentSpace.Direction = (Dir)(((int)CurrentSpace.Direction + 1) % 4);
+				Debug.Log ("Dir changed! new dir is:");
+				Debug.Log (CurrentSpace.Direction);
+				var rotation = new Vector3 (0, 90f, 0);
+				CurrentTile.transform.Rotate (rotation);
+			} else {
+				var newTile = IconSelector.CreateTile(IconSelector.Current);
+				CurrentTile = newTile;
+				//CurrentSpace.Direction = IconSelector.CurrentSelectDir;
+				newTile.transform.parent = this.transform;
+				newTile.transform.localPosition = Vector3.zero;
+			}
+		
 
 			board.board.UpdateWater ();
 
