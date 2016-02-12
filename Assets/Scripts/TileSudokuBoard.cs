@@ -77,7 +77,16 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 		return false;
 	}
 
+	private void ClearWaterFromBoard() {
+
+		for (int i = 0; i < Size; i++)
+			for (int j = 0; j < Size; j++)
+				board [i, j].HasWater = false;
+	}
+
 	public override void UpdateWater() {
+
+		ClearWaterFromBoard ();
 
 		//bool waterStreamContinue = false;
 		int x = startPos[0], y = startPos[1];
@@ -87,11 +96,12 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 		 * * currSpace alredy has water
 		 * * All previous spaces had water
 		 */
-		int n = 1600;
-		while (currSpace != null && currSpace.Value != Tiles.Default && n>0) {
-			n--;
-			if (n<1)
-				throw new System.Exception("holy shit!");
+		//int n = 1600;
+		while (currSpace != null && currSpace.Value != Tiles.Default &&
+				!currSpace.HasWater) {
+			//n--;
+			//if (n<1)
+			//	throw new System.Exception("holy shit!");
 			currSpace.HasWater = true;
 			Debug.Log("Space with coords("+ x + "," +
 				y + ") has water! (and dir is:");
@@ -113,6 +123,7 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 				y = next[1];
 			} else break;
 		}
+		Debug.Log ("Done Updating water");
 
 	}
 
