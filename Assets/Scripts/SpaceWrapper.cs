@@ -9,7 +9,13 @@ using System.Collections.Generic;
 [RequireComponent(typeof(AudioSource))]
 public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
 
+    bool wait;
+    public float speed = 4f;
+    public AudioClip clip;
+    public AudioClip failClip;
+    public SudokuBoardWrapper board;
     public GameObject prefab;
+
 
     public GameObject CurrentTile {
         get { return currentTile; }
@@ -22,13 +28,6 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
         get { if (currentTile==null) return default (Space<Tiles>);
             return currentTile.GetComponent<Space<Tiles>>(); } }
 
-    bool wait;
-
-    public AudioClip clip;
-    public AudioClip failClip;
-
-    public SudokuBoardWrapper board;
-
     public Tiles Value {
         get { return CurrentSpace.Value; }
         set { if (CurrentSpace==null) return;
@@ -36,10 +35,13 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
         }
     }
 
+    public Quaternion TargetRotation {get;set;}
+
 	public Dir Direction {
 		get { return CurrentSpace.Direction; }
 		set { if (CurrentSpace==null) return;
 			CurrentSpace.Direction = value;
+            TargetRotation = Quaternion.Euler(0f,(float) value,0f);
 		}
 	}
 
@@ -62,6 +64,11 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
         CurrentTile = tile;
     }
 
+    void FixedUpdate() {
+        transform.rotation = Quaternion.Lerp(
+            transform.rotation,TargetRotation,Time.deltaTime*speed);
+    }
+
 
     public IEnumerator MakingMove() {
         if (wait) yield break;
@@ -76,12 +83,11 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
 		CurrentSpace.Value = IconSelector.Current;
 		if (board.board.IsBoardValid()) {
 			if (oldTileVal == CurrentSpace.Value) {
-				CurrentSpace.Direction = (Dir)
-                    (((int)CurrentSpace.Direction+90)%360);
+				Direction = (Dir)(((int)Direction+90)%360);
 				//Debug.Log ("Dir changed! new dir is:");
 				//Debug.Log (CurrentSpace.Direction);
-				var rotation = new Vector3(0,(float) -90,0);
-				CurrentTile.transform.Rotate(rotation);
+				//var rotation = new Vector3(0,(float) -90,0);
+				//CurrentTile.transform.Rotate(rotation);
 			} else {
 				var newTile = IconSelector.CreateTile(IconSelector.Current);
 				CurrentTile = newTile;
@@ -95,7 +101,7 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
                 GetComponent<AudioSource>().PlayOneShot(clip);
 		} else {
             if (failClip)
-                GetComponent<AudioSource>().PlayOneShot(failClip);
+                GetComponent<AudioSource>().PlayOneShot(failClip,0.7f);
 			CurrentSpace.Value = oldTileVal;
 		}
 	}
