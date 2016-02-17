@@ -15,7 +15,7 @@ Instructions
 
 The latest build of this game for your platform can be found [here][].
 
-[here]: <>
+[here]: <https://github.com/evan-erdos/Sudoku-Reimagined/releases/tag/v1.0.2>
 
 
 How To Play
