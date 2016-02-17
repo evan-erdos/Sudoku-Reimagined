@@ -86,12 +86,12 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
         Tiles oldTileVal = CurrentSpace.Value;
         CurrentSpace.Value = IconSelector.Current;
         if (board.board.IsBoardValid()) {
-            if (oldTileVal != CurrentSpace.Value) {
+			if (oldTileVal != CurrentSpace.Value) {
                 var newTile = IconSelector.CreateTile(IconSelector.Current);
                 CurrentTile = newTile;
                 newTile.transform.parent = this.transform;
                 newTile.transform.localPosition = Vector3.zero;
-            } else RotateTile();
+			} else if (CurrentSpace.Value != Tiles.Default) RotateTile();
             board.board.UpdateWater();
             if (clip)
                 GetComponent<AudioSource>().PlayOneShot(clip);

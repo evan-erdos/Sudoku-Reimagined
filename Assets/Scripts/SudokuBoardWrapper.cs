@@ -20,7 +20,7 @@ public class SudokuBoardWrapper : MonoBehaviour {
 	public GameObject[] prefabs;
 
 	public IList<GameObject> spaces = new List<GameObject>();
-
+		
 	SpaceWrapper CreateSpaceWrapper(int x, int y) {
 		var instance = Object.Instantiate(prefab,
 			transform.position+new Vector3(x*size+size,0f,y*size+size),
