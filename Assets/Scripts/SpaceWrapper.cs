@@ -64,6 +64,10 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
         CurrentTile = tile;
     }
 
+    void Start() {
+        transform.localRotation = Quaternion.Euler(0f,(float) Direction,0f);
+    }
+
     void FixedUpdate() {
         transform.rotation = Quaternion.Lerp(
             transform.rotation,TargetRotation,Time.deltaTime*speed);
@@ -82,20 +86,12 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
         Tiles oldTileVal = CurrentSpace.Value;
         CurrentSpace.Value = IconSelector.Current;
         if (board.board.IsBoardValid()) {
-            if (oldTileVal == CurrentSpace.Value) {
-                RotateTile();
-                //Debug.Log ("Dir changed! new dir is:");
-                //Debug.Log (CurrentSpace.Direction);
-                //var rotation = new Vector3(0,(float) -90,0);
-                //CurrentTile.transform.Rotate(rotation);
-            } else {
+            if (oldTileVal != CurrentSpace.Value) {
                 var newTile = IconSelector.CreateTile(IconSelector.Current);
                 CurrentTile = newTile;
-                //CurrentSpace.Direction = IconSelector.CurrentSelectDir;
                 newTile.transform.parent = this.transform;
                 newTile.transform.localPosition = Vector3.zero;
-            }
-
+            } else RotateTile();
             board.board.UpdateWater();
             if (clip)
                 GetComponent<AudioSource>().PlayOneShot(clip);

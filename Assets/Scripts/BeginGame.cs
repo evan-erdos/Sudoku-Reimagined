@@ -8,6 +8,8 @@ public class BeginGame : MonoBehaviour {
 
 	bool wait;
 
+    public string scene = "Zendoku-intro";
+
 	MovieTexture movie;
 
     void Start() {
@@ -38,7 +40,7 @@ public class BeginGame : MonoBehaviour {
                     CameraClearFlags.SolidColor;
                 Camera.main.backgroundColor =
                     new Color(0,0,0);
-                SceneManager.LoadScene("Sudoku");});
+                SceneManager.LoadScene(scene);});
 		yield return new WaitForSeconds(delay);
 	}
 }

@@ -17,19 +17,30 @@ public class SudokuBoardWrapper : MonoBehaviour {
 
 	public GameObject prefab;
 
+	public GameObject[] prefabs;
+
 	public IList<GameObject> spaces = new List<GameObject>();
 
-
-	SpaceWrapper CreateSpaceWrapper(int x,int y) {
-		var instance = Object.Instantiate(
-			prefab,
+	SpaceWrapper CreateSpaceWrapper(int x, int y) {
+		var instance = Object.Instantiate(prefab,
 			transform.position+new Vector3(x*size+size,0f,y*size+size),
 			Quaternion.identity) as GameObject;
 		instance.transform.parent = this.transform;
 		instance.GetComponent<SpaceWrapper>().Value = Tiles.Default;
+		var tile = Object.Instantiate(RandomSpace(),
+			transform.position+new Vector3(x*size+size,0f,y*size+size),
+			Quaternion.identity) as GameObject;
+		tile.transform.parent = instance.transform;
+		tile.transform.localPosition = Vector3.zero;
+		instance.GetComponent<SpaceWrapper>().CurrentTile = tile;
 		instance.GetComponent<SpaceWrapper>().board = this;
+		for (var i=0; i<Random.Range(0,3); ++i)
+			instance.GetComponent<SpaceWrapper>().RotateTile();
 		return instance.GetComponent<SpaceWrapper>();
 	}
+
+	GameObject RandomSpace() {
+		return prefabs[Random.Range(0,prefabs.Length)]; }
 
 
 	void Awake() {

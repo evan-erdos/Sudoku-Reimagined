@@ -5,7 +5,7 @@ using System.Collections;
 [AddComponentMenu("Camera-Control/Mouse Orbit with zoom")]
 public class MouseOrbitImproved : MonoBehaviour {
 
-    bool mouse;
+    bool mouse, wait, dragging;
 
     public Transform target;
     public float distance = 5.0f;
@@ -23,26 +23,21 @@ public class MouseOrbitImproved : MonoBehaviour {
     float x = 0.0f;
     float y = 0.0f;
 
-    // Use this for initialization
     void Start() {
         Vector3 angles = transform.eulerAngles;
         x = angles.y;
         y = angles.x;
-
         _rigidbody = GetComponent<Rigidbody>();
-
-        // Make the rigid body not change rotation
         if (_rigidbody != null)
             _rigidbody.freezeRotation = true;
     }
 
     void Update() {
-        mouse = Input.GetMouseButton(0);
-    }
+        mouse = Input.GetMouseButton(0); }
 
     void LateUpdate() {
         if (target) {
-            if (mouse) {
+            if (mouse && dragging) {
                 x += Input.GetAxis("Mouse X") * xSpeed * distance * 0.02f;
                 y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
                 y = ClampAngle(y, yMinLimit, yMaxLimit);
@@ -62,6 +57,17 @@ public class MouseOrbitImproved : MonoBehaviour {
             transform.position = position;
         }
     }
+
+    IEnumerator OnMouseDrag() {
+        if (wait) yield break;
+        wait = true;
+        yield return new WaitForSeconds(0.01f);
+        dragging = true;
+        wait = false;
+    }
+
+    void OnMouseUp() { dragging = false; }
+
 
     public static float ClampAngle(float angle, float min, float max) {
         if (angle < -360F) angle += 360F;
