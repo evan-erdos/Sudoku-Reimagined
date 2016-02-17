@@ -14,7 +14,7 @@ public class LockCameraRotation : MonoBehaviour {
 	void FixedUpdate() {
 		transform.eulerAngles = new Vector3(
 			90f,
-			target.eulerAngles.y,
+			target.eulerAngles.y+30f,
 			target.eulerAngles.z);
 
 	}
