@@ -24,8 +24,10 @@ public class Space<T> : MonoBehaviour, ISpace<T> {
     	get { return Value==null; } }
 
     public virtual void Awake() {
-    	//if (!water)
-    	//	throw new System.Exception("No water!");
+		if (!water) {
+			Debug.Log ("EXCEPTION!!! My value is: " + Value.ToString ());
+			throw new System.Exception ("No water!");
+		}
     	water.SetActive(false);
     }
 }

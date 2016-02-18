@@ -16,7 +16,8 @@ public enum Tiles : int {
 	Lower=2,
 	Level=3,
 	Spout=4,
-	Empty=5}
+	Empty=5,
+	Rock=6}
 
 
 public enum Dir : int {

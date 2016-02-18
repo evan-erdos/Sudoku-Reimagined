@@ -107,7 +107,7 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
 
 
     public void OnMouseOver() {
-		if (CurrentSpace.Value == Tiles.Empty)
+		if (CurrentSpace.Value == Tiles.Empty || CurrentSpace.Value == Tiles.Rock)
 			return;
         if (Input.GetButtonUp ("Fire1")) MakeMove();
 //        while (!wait) {

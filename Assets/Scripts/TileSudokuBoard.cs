@@ -41,7 +41,8 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 		/* Check that there is no more than 1 of each special piece in line */
 		var uniqueSeen = new HashSet<Tiles>();
 		foreach (var space in list) {
-			if (space.Value != Tiles.Default && space.Value != Tiles.Empty) {
+			if (space.Value != Tiles.Default && space.Value != Tiles.Empty &&
+				space.Value != Tiles.Rock) {
 				if (uniqueSeen.Contains(space.Value))
 					return false;
 				uniqueSeen.Add(space.Value);
@@ -66,6 +67,7 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 		switch (nextTile) {
 		case Tiles.Default:
 		case Tiles.Empty:
+		case Tiles.Rock:
 			return false;
 		case Tiles.Raise:
 			return currTile == Tiles.Spout;
