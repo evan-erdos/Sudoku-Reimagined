@@ -12,7 +12,28 @@ public class IconSelector : MonoBehaviour {
 	public static Tiles Current {get;set;}
 
 	public void Awake() {
+		Debug.Log ("Icon Selector awakened!");
+
 		IconSelector.globalTiles = tiles;
+	}
+
+	public void Update() {
+		//Debug.Log ("ICON SELECTOR UDPDAAATE");
+		if (Input.GetKeyDown (KeyCode.Alpha1)) {
+			SetTile(Tiles.Default);
+		}
+		if (Input.GetKeyDown (KeyCode.Alpha2)) {
+			SetTile(Tiles.Level);
+		}
+		if (Input.GetKeyDown (KeyCode.Alpha3)) {
+			SetTile(Tiles.Lower);
+		}
+		if (Input.GetKeyDown (KeyCode.Alpha4)) {
+			SetTile (Tiles.Raise);
+		}
+		if (Input.GetKeyDown (KeyCode.Alpha5)) {
+			SetTile(Tiles.Spout);
+		}
 	}
 
 	public void SetTileDefault() { SetTile(Tiles.Default); }
