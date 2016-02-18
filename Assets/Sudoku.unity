@@ -1712,10 +1712,10 @@ RectTransform:
   - {fileID: 2094295040}
   m_Father: {fileID: 24001396}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0.13900001, y: 0.18200001}
-  m_AnchorMax: {x: 0.5, y: 0.6836829}
-  m_AnchoredPosition: {x: 251, y: 183}
-  m_SizeDelta: {x: 142, y: -131}
+  m_AnchorMin: {x: 0.30800003, y: 0.69100004}
+  m_AnchorMax: {x: 0.88124394, y: 0.9250001}
+  m_AnchoredPosition: {x: 1, y: -1.5}
+  m_SizeDelta: {x: 3, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1729561492
 MonoBehaviour:
