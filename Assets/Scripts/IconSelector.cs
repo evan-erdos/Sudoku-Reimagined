@@ -20,19 +20,19 @@ public class IconSelector : MonoBehaviour {
 	public void Update() {
 		//Debug.Log ("ICON SELECTOR UDPDAAATE");
 		if (Input.GetKeyDown (KeyCode.Alpha1)) {
-			SetTile(Tiles.Default);
+			SetTileDefault ();
 		}
 		if (Input.GetKeyDown (KeyCode.Alpha2)) {
-			SetTile(Tiles.Level);
+			SetTileLevel ();
 		}
 		if (Input.GetKeyDown (KeyCode.Alpha3)) {
-			SetTile(Tiles.Lower);
+			SetTileLower ();
 		}
 		if (Input.GetKeyDown (KeyCode.Alpha4)) {
-			SetTile (Tiles.Raise);
+			SetTileRaise ();
 		}
 		if (Input.GetKeyDown (KeyCode.Alpha5)) {
-			SetTile(Tiles.Spout);
+			SetTileSpout ();
 		}
 	}
 
@@ -41,6 +41,7 @@ public class IconSelector : MonoBehaviour {
 	public void SetTileLower() { SetTile(Tiles.Lower); }
 	public void SetTileLevel() { SetTile(Tiles.Level); }
 	public void SetTileSpout() { SetTile(Tiles.Spout); }
+	public void SetTileEmpty() { SetTile(Tiles.Empty); }
 
 	public void SetTile(Tiles tile) {
 		Current = tile;
