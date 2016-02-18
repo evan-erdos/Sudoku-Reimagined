@@ -111,7 +111,7 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 
 			int[] next = GetNextSpaceCoords(x, y, currSpace.Direction);
 			//Debug.Log("Got next coordinates. They are ("+ next[0] + "," +
-				next[1] + ")");
+			//	next[1] + ")");
 
 			ISpace<Tiles> nextSpace = this[next[0],next[1]];
 			if (nextSpace==null) break; //out of bounds

@@ -21,12 +21,13 @@ public class SudokuBoardWrapper : MonoBehaviour {
 
 	public IList<GameObject> spaces = new List<GameObject>();
 		
-	SpaceWrapper CreateSpaceWrapper(int x, int y) {
+	SpaceWrapper CreateSpaceWrapper(int x, int y, Tiles value) {
 		var instance = Object.Instantiate(prefab,
 			transform.position+new Vector3(x*size+size,0f,y*size+size),
 			Quaternion.identity) as GameObject;
 		instance.transform.parent = this.transform;
-		instance.GetComponent<SpaceWrapper>().Value = Tiles.Default;
+		// TODO: This is where we create the default space
+		instance.GetComponent<SpaceWrapper>().Value = value;
 		var tile = Object.Instantiate(RandomSpace(),
 			transform.position+new Vector3(x*size+size,0f,y*size+size),
 			Quaternion.identity) as GameObject;
@@ -49,7 +50,8 @@ public class SudokuBoardWrapper : MonoBehaviour {
 		var spaceArr = new ISpace<Tiles>[dims, dims];
 		for (var i=0; i<dims; ++i)
 			for (var j=0; j<dims; ++j)
-				spaceArr[i,j] = CreateSpaceWrapper(i,j);
+				if (!(j > 1 && Application.loadedLevelName == "Tutorial"))
+					spaceArr[i,j] = CreateSpaceWrapper(i,j, Tiles.Default);
 		board = new TileSudokuBoard((int) dims, spaceArr);
 	}
 
