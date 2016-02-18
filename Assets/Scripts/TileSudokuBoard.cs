@@ -41,7 +41,7 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 		/* Check that there is no more than 1 of each special piece in line */
 		var uniqueSeen = new HashSet<Tiles>();
 		foreach (var space in list) {
-			if (space.Value != Tiles.Default) {
+			if (space.Value != Tiles.Default && space.Value != Tiles.Empty) {
 				if (uniqueSeen.Contains(space.Value))
 					return false;
 				uniqueSeen.Add(space.Value);
@@ -65,6 +65,7 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 
 		switch (nextTile) {
 		case Tiles.Default:
+		case Tiles.Empty:
 			return false;
 		case Tiles.Raise:
 			return currTile == Tiles.Spout;
@@ -103,13 +104,13 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 			!currSpace.HasWater) {
 
 			currSpace.HasWater = true;
-			Debug.Log("Space with coords("+ x + "," +
-				y + ") has water! (and dir is:");
-			Debug.Log(currSpace.Direction);
-			Debug.Log(currSpace.Value);
+//			Debug.Log("Space with coords("+ x + "," +
+//				y + ") has water! (and dir is:");
+//			Debug.Log(currSpace.Direction);
+//			Debug.Log(currSpace.Value);
 
 			int[] next = GetNextSpaceCoords(x, y, currSpace.Direction);
-			Debug.Log("Got next coordinates. They are ("+ next[0] + "," +
+			//Debug.Log("Got next coordinates. They are ("+ next[0] + "," +
 				next[1] + ")");
 
 			ISpace<Tiles> nextSpace = this[next[0],next[1]];
