@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 440294}
   - 114: {fileID: 11460734}
   m_Layer: 0
-  m_Name: 4
+  m_Name: Spout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
