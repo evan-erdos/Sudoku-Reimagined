@@ -11,7 +11,6 @@ GameObject:
   - 33: {fileID: 3356562}
   - 23: {fileID: 2381492}
   - 95: {fileID: 9578904}
-  - 65: {fileID: 6554904}
   m_Layer: 0
   m_Name: LevelNormal (1)
   m_TagString: Untagged
@@ -80,7 +79,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 497154}
   - 33: {fileID: 3357376}
-  - 64: {fileID: 6484566}
   - 23: {fileID: 2342532}
   m_Layer: 8
   m_Name: Plane (3)
@@ -345,30 +343,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 167428}
   m_Mesh: {fileID: 4300000, guid: 8fa0ebf80a7c34820b1a103d8b6455dd, type: 3}
---- !u!64 &6484566
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 192424}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &6554904
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 143722}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5490942, z: 0.5}
-  m_Center: {x: 0, y: 0.024547115, z: 0}
 --- !u!95 &9510132
 Animator:
   serializedVersion: 3
