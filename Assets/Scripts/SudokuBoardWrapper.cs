@@ -25,18 +25,16 @@ public class SudokuBoardWrapper : MonoBehaviour {
 		{0,0,0,0},
 		{0,0,0,0},
 		{0,0,0,0},
-		{0,0,0,0},
-	};
+		{0,0,0,0}};
 
 	int[,] tutorialBoard = {
 		{0,5,5,5},
 		{0,5,5,5},
-		{0,6,0,5},
-		{0,0,0,5},
-	};
-		
+		{0,6,0,7},
+		{0,0,0,5}};
 
-		
+
+
 	SpaceWrapper CreateSpaceWrapper(int x, int y, Tiles value) {
 		var instance = Object.Instantiate(prefab,
 			transform.position+new Vector3(x*size+size,0f,y*size+size),
@@ -61,10 +59,6 @@ public class SudokuBoardWrapper : MonoBehaviour {
 
 
 	void Awake() {
-
-		Debug.Log ("Awake on Sudoku board wrapper!");
-
-
 		int[,] boardArr;
 		switch (SceneManager.GetActiveScene().name) {
 		case "Tutorial":
@@ -72,7 +66,7 @@ public class SudokuBoardWrapper : MonoBehaviour {
 			break;
 		case "MainGame":
 		default:
-			Debug.Log ("name is " + SceneManager.GetActiveScene ().name);
+			Debug.Log ("name is " + SceneManager.GetActiveScene().name);
 			boardArr = normalBoard;
 			break;
 		}
