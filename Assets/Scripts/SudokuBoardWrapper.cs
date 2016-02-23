@@ -17,6 +17,8 @@ public class SudokuBoardWrapper : MonoBehaviour {
 
 	public GameObject prefab;
 
+	public GameObject winScreen;
+
 	public GameObject[] prefabs;
 
 	public IList<GameObject> spaces = new List<GameObject>();
@@ -60,9 +62,14 @@ public class SudokuBoardWrapper : MonoBehaviour {
 
 	void Awake() {
 		int[,] boardArr;
+
+		var spaceArr = new ISpace<Tiles>[dims, dims];
+		board = new TileSudokuBoard((int) dims, spaceArr);
+
 		switch (SceneManager.GetActiveScene().name) {
 		case "Tutorial":
 			boardArr = tutorialBoard;
+			board.EndPos = new int[] {2, 2};
 			break;
 		case "MainGame":
 		default:
@@ -71,16 +78,16 @@ public class SudokuBoardWrapper : MonoBehaviour {
 			break;
 		}
 
+
 		if (prefab==null)
 			throw new System.Exception("missing spacewrapper prefab");
-		var spaceArr = new ISpace<Tiles>[dims, dims];
+		//var spaceArr = new ISpace<Tiles>[dims, dims];
 		for (var i = 0; i < dims; ++i)
 			for (var j = 0; j < dims; ++j) {
 				spaceArr [i, j] = CreateSpaceWrapper (i, j, (Tiles)boardArr [i, j]);
 				Debug.Log ("Set Tile " + boardArr [i, j].ToString () + " at position" + i.ToString () + ", " + j.ToString());
 
 			}
-		board = new TileSudokuBoard((int) dims, spaceArr);
 	}
 
 	public IEnumerator Restarting() {

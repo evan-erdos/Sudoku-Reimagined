@@ -10,7 +10,7 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 
 	public int[] startPos;
 
-	public int[] endPos;
+	//public int[] endPos;
 
 	public TileSudokuBoard() : base(9) { }
 
@@ -18,8 +18,8 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 
     public TileSudokuBoard(int size, ISpace<Tiles>[,] array)
     				: base(size,array) {
-		startPos = new int[] {0,0};
-		endPos = new int[] {3,3};
+		this.startPos = new int[] {0,0};
+		this.endPos = new int[] {3,3};
 	}
 
     public override bool IsRowValid(int n) {
@@ -106,14 +106,14 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 			!currSpace.HasWater) {
 
 			currSpace.HasWater = true;
-//			Debug.Log("Space with coords("+ x + "," +
-//				y + ") has water! (and dir is:");
-//			Debug.Log(currSpace.Direction);
-//			Debug.Log(currSpace.Value);
+			Debug.Log("Space with coords("+ x + "," +
+				y + ") has water! (and dir is:");
+			Debug.Log(currSpace.Direction);
+			Debug.Log(currSpace.Value);
 
 			int[] next = GetNextSpaceCoords(x, y, currSpace.Direction);
-			//Debug.Log("Got next coordinates. They are ("+ next[0] + "," +
-			//	next[1] + ")");
+			Debug.Log("Got next coordinates. They are ("+ next[0] + "," +
+				next[1] + ")");
 
 			ISpace<Tiles> nextSpace = this[next[0],next[1]];
 			if (nextSpace==null) break; //out of bounds
@@ -129,10 +129,8 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 
 	}
 
-	public override void CheckForWin() {
-		if (this [endPos [0], endPos [1]].HasWater )
-			return;
-			// Trigger win screen
+	public override bool Solved() {
+		return this [endPos [0], endPos [1]].HasWater;
 	}
 
 	public override int Score() {

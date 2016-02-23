@@ -21,7 +21,7 @@ public enum Tiles : int {
 
 
 public enum Dir : int {
-	East=0,
-	North=90,
-	West=180,
-	South=270}
+	North=0,
+	East=90,
+	South=180,
+	West=270}

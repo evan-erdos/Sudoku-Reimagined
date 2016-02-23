@@ -16,7 +16,6 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
     public SudokuBoardWrapper board;
     public GameObject prefab;
 
-
     public GameObject CurrentTile {
         get { return currentTile; }
         set { Destroy(currentTile);
@@ -95,7 +94,8 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
             board.board.UpdateWater();
             if (clip)
                 GetComponent<AudioSource>().PlayOneShot(clip);
-			board.board.CheckForWin ();
+			if (board.board.Solved ())
+				board.winScreen.SetActive (true);
         } else {
             if (failClip)
                 GetComponent<AudioSource>().PlayOneShot(failClip,0.7f);
@@ -104,7 +104,7 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
     }
 
     public void RotateTile() {
-        Direction = (Dir)(((int)Direction+90)%360); }
+		Direction = (Dir)((((int)Direction+90)+360)%360); }
 
 
     public void OnMouseOver() {

@@ -33,6 +33,11 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<T>
         get { return board; }
     } protected T[,] board;
 
+	public int[] EndPos {
+		get { return endPos; }
+		set { endPos = value; }
+	} protected int [] endPos;
+
     public T this[int x, int y] {
         get { return (IsValidSpace(x,y)?
             (board[x,y]):(default (T))); }
@@ -58,20 +63,20 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<T>
 
 	public T GetNextSpace(int x, int y, Dir dir) {
 		switch (dir) {
-    		case Dir.East: return board[x,y-1];
-    		case Dir.West: return board[x,y+1];
-    		case Dir.South: return board[x-1,y];
-    		case Dir.North: return board[x+1,y];
-            default: return default(T);
+		case Dir.North: return board[x,y+1];
+		case Dir.South: return board[x,y-1];
+		case Dir.East: return board[x+1,y];
+		case Dir.West: return board[x-1,y];
+        default: return default(T);
 		}
 	}
 
 	public int[] GetNextSpaceCoords(int x, int y, Dir dir) {
 		switch (dir) {
-    		case Dir.East: return new int[] {x,y-1};
-    		case Dir.West: return new int[] {x,y+1};
-    		case Dir.South: return new int[] {x-1,y};
-    		case Dir.North: return new int[] {x+1,y};
+    		case Dir.East: return new int[] {x+1,y};
+    		case Dir.West: return new int[] {x-1,y};
+    		case Dir.South: return new int[] {x,y-1};
+    		case Dir.North: return new int[] {x,y+1};
             default: return new int[0];
 		}
 	}
@@ -120,7 +125,7 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<T>
         return PlaySequence.Dequeue();
     }
 
-	public abstract void CheckForWin ();
+	public abstract bool Solved();
 
 	public abstract void UpdateWater();
 
