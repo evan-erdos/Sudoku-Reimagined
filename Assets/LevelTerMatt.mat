@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: LevelTerMat
+  m_Name: LevelTerMatt
   m_Shader: {fileID: 45, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _DETAIL_MULX2 _EMISSION _METALLICGLOSSMAP _NORMALMAP
   m_LightmapFlags: 1
@@ -138,7 +138,7 @@ Material:
       data:
         first:
           name: _EmissionColor
-        second: {r: 0.618, g: 0.5413785, b: 0.34024715, a: 1}
+        second: {r: 0.31843904, g: 0.23502381, b: 0.46323532, a: 1}
       data:
         first:
           name: _Color
@@ -146,4 +146,4 @@ Material:
       data:
         first:
           name: _SpecColor
-        second: {r: 0.61960787, g: 0.5411765, b: 0.34117648, a: 1}
+        second: {r: 0.45882356, g: 0.5019608, b: 0.7137255, a: 1}
