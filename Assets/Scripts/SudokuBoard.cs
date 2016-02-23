@@ -120,6 +120,8 @@ public abstract class SudokuBoard<T> : ISudokuBoard<T>, IEnumerable<T>
         return PlaySequence.Dequeue();
     }
 
+	public abstract void CheckForWin ();
+
 	public abstract void UpdateWater();
 
     public abstract bool IsValid(IList<T> list);

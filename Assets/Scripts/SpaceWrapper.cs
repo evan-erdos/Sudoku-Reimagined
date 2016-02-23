@@ -95,6 +95,7 @@ public class SpaceWrapper : MonoBehaviour, ISpace<Tiles> {
             board.board.UpdateWater();
             if (clip)
                 GetComponent<AudioSource>().PlayOneShot(clip);
+			board.board.CheckForWin ();
         } else {
             if (failClip)
                 GetComponent<AudioSource>().PlayOneShot(failClip,0.7f);

@@ -45,6 +45,7 @@ public class IconSelector : MonoBehaviour {
 
 	public void SetTile(Tiles tile) {
 		Current = tile;
+		// update tranform of selected thing 	
 	}
 
 	public static GameObject CreateTile(Tiles tile) {

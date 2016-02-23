@@ -87,7 +87,7 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 				board [i, j].HasWater = false;
 	}
 
-	
+
 
 	public override void UpdateWater() {
 
@@ -127,6 +127,12 @@ public class TileSudokuBoard : SudokuBoard<ISpace<Tiles>> {
 			} else break;
 		}
 
+	}
+
+	public override void CheckForWin() {
+		if (this [endPos [0], endPos [1]].HasWater )
+			return;
+			// Trigger win screen
 	}
 
 	public override int Score() {
